@@ -18,7 +18,7 @@ const Header2: React.FC<Header2Props> = ({ onLoginClick, onRegisterClick }) => {
         { name: 'Home', href: '/' },
         { name: 'Product', href: '/product' },
         { name: 'Services', href: '/services' },
-        { name: 'About', href: '/about' },
+        { name: 'About', href: '/aboutus' },
         { name: 'Case Studies', href: '/case-studies' },
         { name: 'Our Team', href: '/our-team' },
         { name: 'Contact', href: '/contact' }
