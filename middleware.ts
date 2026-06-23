@@ -37,7 +37,7 @@ export default async function middleware(req: NextRequest) {
 
     
     // Marketing & Info Pages
-    NAVIGATION.ABOUT_US?.toString(),
+    NAVIGATION.ABOUT_US.toString(),
     NAVIGATION.PRODUCTS?.toString(), 
     NAVIGATION.REVIEWS?.toString(), 
     NAVIGATION.SHIPPING?.toString(),
