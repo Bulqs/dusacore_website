@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import Header2 from '@/app/components/newlandingpage/Header2';
+import Header2 from '@/app/components/dusacomponent/Header2';
 import TeamCard from '@/app/components/dusacomponent/TeamCard';
-import Footer from '@/app/components/newlandingpage/Footer';
+import Footer from '@/app/components/dusacomponent/Footer';
 import Banner from '@/app/components/dusacomponent/Banner';
 import teamBanner from '@/public/images/dusacoreimages/dusacoreabout.jpg';
 import akinwale from '@/public/images/dusacoreimages/dusateam/Akinwale Olawale Ridwan.jpeg';

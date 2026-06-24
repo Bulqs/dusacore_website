@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Header2 from "@/app/components/newlandingpage/Header2";
-import Footer from "@/app/components/newlandingpage/Footer";
+import Header2 from "@/app/components/dusacomponent/Header2";
+import Footer from "@/app/components/dusacomponent/Footer";
 import Banner from "@/app/components/dusacomponent/Banner";
 import contactBanner from "@/public/images/dusacoreimages/dusacoreabout.jpg";
 import contactImg from "@/public/images/dusacoreimages/communication.jpg";

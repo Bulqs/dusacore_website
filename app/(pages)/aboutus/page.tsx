@@ -2,13 +2,13 @@
 
 import React from 'react';
 import aboutBanner from '@/public/images/dusacoreimages/dusacoreabout.jpg';
-import Header2 from '@/app/components/newlandingpage/Header2';
+import Header2 from '@/app/components/dusacomponent/Header2';
 import Banner from '@/app/components/dusacomponent/Banner';
 import WhoWeAre from '@/app/components/dusacomponent/dusaaboutuspage/WhoWeAre';
 import OurVision from '@/app/components/dusacomponent/dusaaboutuspage/OurVision';
 import OurMission from '@/app/components/dusacomponent/dusaaboutuspage/OurMission';
 import WhatWeDo from '@/app/components/dusacomponent/dusaaboutuspage/WhatWeDo';
-import Footer from '@/app/components/newlandingpage/Footer';
+import Footer from '@/app/components/dusacomponent/Footer';
 
 export default function AboutUsPage() {
     function setIsLoginOpen(arg0: boolean): void {
