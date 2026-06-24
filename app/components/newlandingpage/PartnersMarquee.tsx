@@ -23,7 +23,7 @@ const PartnersMarquee = () => {
     const marqueeItems = [...partners, ...partners];
 
     return (
-        <section className="w-full bg-white py-16 flex flex-col items-center justify-center overflow-hidden">
+        <section className="w-full bg-white space-y-8 py-8 flex flex-col items-center justify-center overflow-hidden">
             
             {/* Inline CSS for the infinite marquee animation */}
             <style jsx>{`
@@ -46,7 +46,7 @@ const PartnersMarquee = () => {
             {/* =========================================
                 TOP DIV: Heading
             ========================================= */}
-            <div className="mb-16 px-6 text-center">
+            <div className="px-6 text-center">
                 <h2 className="text-montserrat text-appBlack font-light text-sm md:text-[20px] tracking-wide">
                     Partnering with Global Institutions and Ambitious Founders
                 </h2>
@@ -55,7 +55,7 @@ const PartnersMarquee = () => {
             {/* =========================================
                 BOTTOM DIV: Automatic Scrolling Tray
             ========================================= */}
-            <div className="w-full relative flex overflow-hidden py-4">
+            <div className="w-full relative flex overflow-hidden">
                 
                 {/* Optional: White fading gradients on the left and right edges for a polished look */}
                 <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>

@@ -520,7 +520,7 @@ export default function ContactPage() {
                 type="submit"
                 className="w-full bg-appBanner text-white py-3 font-bold shadow-lg hover:bg-appNav transition-all duration-300"
               >
-                Send Message
+                Get Notified
               </button>
             </form>
           </div>

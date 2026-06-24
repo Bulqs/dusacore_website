@@ -307,6 +307,7 @@ export enum NAVIGATION {
   FAQ = `/faq`,
   CONTACT = `/contact`,
   OUR_TEAM = `/our-team`,
+  CASE_STUDIES = `/case-studies`,
   HOW_IT_WORKS = `/how-it-works`,
   SERVICES = `/services`,
   PRICING = `/pricing`,
