@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import Header2 from '@/app/components/newlandingpage/Header2';
-import Footer from '@/app/components/newlandingpage/Footer';
+import Header2 from '@/app/components/dusacomponent/Header2';
+import Footer from '@/app/components/dusacomponent/Footer';
 import Banner from '@/app/components/dusacomponent/Banner';
 import ImageTextSection from '@/app/components/dusacomponent/ImageTextSection';
 import PartnersMarquee from '@/app/components/newlandingpage/PartnersMarquee';

@@ -1,8 +1,8 @@
 "use client"
-import Header2 from '@/app/components/newlandingpage/Header2';
+import Header2 from '@/app/components/dusacomponent/Header2';
 import React, { useState } from 'react'
 import SignUpWithBulq from '@/app/components/newlandingpage/SignUpWithBulq';
-import Footer from '@/app/components/newlandingpage/Footer'
+import Footer from '@/app/components/dusacomponent/Footer'
 import Banner from '@/app/components/newlandingpage/Banner';
 import BannerWithStrip from '@/app/components/newlandingpage/PartnersMarquee';
 import PartnersMarquee from '@/app/components/newlandingpage/PartnersMarquee';

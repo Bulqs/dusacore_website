@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useUserStore } from '@/lib/utils/store';
+import logodusa from '@/public/images/dusacoreimages/logodusa.png';
 
 interface Header2Props {
     onLoginClick?: () => void;
@@ -31,11 +32,11 @@ const Header2: React.FC<Header2Props> = ({ onLoginClick, onRegisterClick }) => {
             <div className="flex items-center">
                 <Link href="/" className="transition-transform hover:scale-105 active:scale-95">
                     <Image
-                        src="https://plain-weur-prod-public.komododecks.com/202606/10/v9WarDYk2cqwh3FiRlF0/image.jpg"
+                        src={logodusa}
                         alt="DUSA Logo"
                         width={160}
                         height={160}
-                        className="w-32 md:w-160 h-[160px] object-contain mix-blend-multiply"
+                        className="w-32 md:w-160 h-[160px] object-contain"
                         priority
                     />
                 </Link>
@@ -48,7 +49,7 @@ const Header2: React.FC<Header2Props> = ({ onLoginClick, onRegisterClick }) => {
                         <li key={item.name}>
                             <Link
                                 href={item.href}
-                                className="font-aeonik text-appNav hover:text-appLightPurple font-medium transition-all duration-200 text-sm tracking-wide relative group"
+                                className="font-aeonik text-appNav hover:text-appLightPurple font-bold transition-all duration-200 text-sm tracking-wide relative group"
                             >
                                 {item.name}
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-appNav transition-all duration-300 group-hover:w-full"></span>
