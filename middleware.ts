@@ -25,25 +25,7 @@ export default async function middleware(req: NextRequest) {
     NAVIGATION.CONTACT.toString(),
     NAVIGATION.PRICING.toString(),
     NAVIGATION.OUR_TEAM.toString(),
-    
-    // Fallback static strings just in case the ENUMs fail
-    // "/signin",
-    // "/signup",
-    // "/welcome",
-
-    "/signin",
-    "/signup",
-    "/welcome",
-    "/oauth2/authorization/google",
-
-    
-    // Marketing & Info Pages
-    NAVIGATION.ABOUT_US.toString(),
-    NAVIGATION.PRODUCTS?.toString(), 
-    NAVIGATION.REVIEWS?.toString(), 
-    NAVIGATION.SHIPPING?.toString(),
-    NAVIGATION.TERMS?.toString(), 
-    NAVIGATION.BRAND?.toString(), 
+    NAVIGATION.CASE_STUDIES.toString(),
     
     // Driver Public Entry Pages
     NAVIGATION.DRIVERSWEB?.toString(), 
