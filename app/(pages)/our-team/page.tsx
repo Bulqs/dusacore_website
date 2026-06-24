@@ -7,6 +7,11 @@ import TeamCard from '@/app/components/dusacomponent/TeamCard';
 import Footer from '@/app/components/newlandingpage/Footer';
 import Banner from '@/app/components/dusacomponent/Banner';
 import teamBanner from '@/public/images/dusacoreimages/dusacoreabout.jpg';
+import akinwale from '@/public/images/dusacoreimages/dusateam/Akinwale Olawale Ridwan.jpeg';
+import edifon from '@/public/images/dusacoreimages/dusateam/Edifon Emmanuel Jimmy.jpeg';
+import fatimah from '@/public/images/dusacoreimages/dusateam/Fatimah Hammed Omoshalewa.jpeg';
+import hammed from '@/public/images/dusacoreimages/dusateam/Hammed Ridawan Olaide.jpeg';
+import umar from '@/public/images/dusacoreimages/dusateam/Umar Ibrahim A.jpeg';
 
 const staggerContainer: Variants = {
     hidden: { opacity: 0 },
@@ -19,12 +24,12 @@ const fadeUpItem: Variants = {
 };
 
 const team = [
-    { name: "Alex Johnson", role: "CEO & Founder", image: "https://i.pravatar.cc/300?img=1" },
-    { name: "Sarah Chen", role: "CTO", image: "https://i.pravatar.cc/300?img=5" },
-    { name: "Michael Okonkwo", role: "Head of Engineering", image: "https://i.pravatar.cc/300?img=3" },
-    { name: "Emily Davis", role: "Lead Designer", image: "https://i.pravatar.cc/300?img=9" },
-    { name: "David Kim", role: "DevOps Lead", image: "https://i.pravatar.cc/300?img=11" },
-    { name: "Amara Obi", role: "Product Manager", image: "https://i.pravatar.cc/300?img=12" },
+    { name: "Hammed Ridwan Olaide", role: "Chief Executive Officer", image: hammed },
+    { name: "Akinwale Olawale Ridwan", role: "Chief Creative Designer", image: akinwale },
+    { name: "Edifon Emmanuel Jimmy", role: "Chief Artificial Intelligence Officer", image: edifon },
+    { name: "Umar Ibrahim Ayobami", role: "Chief Experience Officer", image: umar },
+    { name: "Fatimah Hammed Omoshalewa", role: "Chief Growth", image: fatimah },
+    { name: "Ganiyat Bukola Shittu", role: "Chief Product Manager" },
 ];
 
 export default function OurTeamPage() {
