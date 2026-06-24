@@ -1,113 +1,541 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion, Variants } from 'framer-motion'; // <-- Added Variants import
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import React, { useState } from "react";
+import Image from "next/image";
+import Header2 from "@/app/components/newlandingpage/Header2";
+import Footer from "@/app/components/newlandingpage/Footer";
+import Banner from "@/app/components/dusacomponent/Banner";
+import contactBanner from "@/public/images/dusacoreimages/dusacoreabout.jpg";
+import contactImg from "@/public/images/dusacoreimages/communication.jpg";
 
-// --- FRAMER MOTION VARIANTS ---
-const staggerContainer: Variants = { // <-- Extracted and strongly typed
-    hidden: { opacity: 0 }, 
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } } 
+const flagSvgs: Record<string, string> = {
+  "+1": '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="2" width="20" height="2" fill="#b22234"/><rect y="6" width="20" height="2" fill="#b22234"/><rect y="10" width="20" height="2" fill="#b22234"/><rect width="8" height="7" fill="#3c3b6e"/><circle cx="2.5" cy="2" r="0.6" fill="#fff"/><circle cx="4" cy="2" r="0.6" fill="#fff"/><circle cx="5.5" cy="2" r="0.6" fill="#fff"/><circle cx="3.25" cy="3.3" r="0.6" fill="#fff"/><circle cx="4.75" cy="3.3" r="0.6" fill="#fff"/><circle cx="2.5" cy="4.6" r="0.6" fill="#fff"/><circle cx="4" cy="4.6" r="0.6" fill="#fff"/><circle cx="5.5" cy="4.6" r="0.6" fill="#fff"/></svg>',
+  "+7": '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#d52b1e"/></svg>',
+  "+20":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#000"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+27":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#007a4d"/><rect y="2" width="20" height="10" fill="#fff"/><rect y="4" width="20" height="6" fill="#ffb612"/><polygon points="8,0 0,7 8,14 8,0" fill="#000"/><polygon points="8,0 0,7 8,14" fill="none" stroke="#fff" strokeWidth="2"/><rect x="8" y="0" width="2" height="14" fill="#de3831"/><rect x="8" y="0" width="1" height="14" fill="#fff"/></svg>',
+  "+31":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+32":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#000"/><rect x="6.67" width="6.66" height="14" fill="#fdda24"/><rect x="13.33" width="6.67" height="14" fill="#c8102e"/></svg>',
+  "+33":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#002395"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#ed2939"/></svg>',
+  "+34":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c60b1e"/><rect y="2" width="20" height="2" fill="#ffc400"/><rect y="6" width="20" height="2" fill="#ffc400"/><rect y="10" width="20" height="2" fill="#ffc400"/></svg>',
+  "+39":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#009246"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#ce2b37"/></svg>',
+  "+41":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+44":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#012169"/><rect y="5" width="20" height="4" fill="#fff"/><rect x="8" width="4" height="14" fill="#fff"/><rect y="6.5" width="20" height="1" fill="#c8102e"/><rect x="9.5" width="1" height="14" fill="#c8102e"/></svg>',
+  "+49":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="4.67" fill="#000"/><rect y="4.67" width="20" height="4.66" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#ffcc00"/></svg>',
+  "+52":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#006847"/><rect y="9.33" width="20" height="4.67" fill="#ce1126"/><polygon points="10,4 11.5,7 14,7 12,9 12.5,12 10,10 7.5,12 8,9 6,7 8.5,7" fill="#006847"/></svg>',
+  "+55":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#009c3b"/><polygon points="10,2 18,10 2,10" fill="#fedf00"/><circle cx="10" cy="8" r="2.5" fill="#002776"/></svg>',
+  "+61":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#00008b"/><circle cx="3" cy="4" r="2.5" fill="#fff"/><polygon points="3,2 3.5,3.2 5,3.2 3.8,4 4.2,5.2 3,4.4 1.8,5.2 2.2,4 1,3.2 2.5,3.2" fill="#c8102e"/></svg>',
+  "+62":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="7" fill="#c8102e"/><rect y="7" width="20" height="7" fill="#fff"/></svg>',
+  "+63":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#0038a8"/><rect y="9.33" width="20" height="4.67" fill="#ce1126"/><polygon points="10,3 11,5.5 14,5.5 11.5,7.5 12.5,10 10,8 7.5,10 8.5,7.5 6,5.5 9,5.5" fill="#fcd116"/></svg>',
+  "+64":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#00247d"/><rect y="5" width="20" height="4" fill="#fff"/><rect x="8" width="4" height="14" fill="#fff"/><rect y="6.5" width="20" height="1" fill="#c8102e"/><rect x="9.5" width="1" height="14" fill="#c8102e"/><polygon points="14,1 15,3 17,3 15.5,4.5 16.5,6.5 14,5 11.5,6.5 12.5,4.5 11,3 13,3" fill="#c8102e"/></svg>',
+  "+65":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><polygon points="10,2 11,4.5 14,4.5 11.5,6.5 12.5,9 10,7 7.5,9 8.5,6.5 6,4.5 9,4.5" fill="#fff"/><polygon points="10,3 10.5,4.2 12,4.2 10.8,5 11.2,6.2 10,5.4 8.8,6.2 9.2,5 8,4.2 9.5,4.2" fill="#c8102e"/></svg>',
+  "+86":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#de2910"/><polygon points="10,2 11,4.5 14,4.5 11.5,6.5 12.5,9 10,7 7.5,9 8.5,6.5 6,4.5 9,4.5" fill="#ffde00"/></svg>',
+  "+90":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><circle cx="9" cy="7" r="4" fill="#fff"/><circle cx="10" cy="7" r="3" fill="#c8102e"/></svg>',
+  "+91":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#ff9933"/><rect y="4.67" width="20" height="4.66" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#138808"/><circle cx="10" cy="7" r="1.5" fill="#000080"/></svg>',
+  "+92":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#01411c"/><polygon points="8,2 9,4 11,4 9.5,5.5 10,7.5 8,6 6,7.5 6.5,5.5 5,4 7,4" fill="#fff"/></svg>',
+  "+93":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#000"/><rect y="4.67" width="20" height="4.66" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#006600"/></svg>',
+  "+94":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#ffbe00"/><rect width="6" height="14" fill="#006633"/><rect x="14" width="6" height="14" fill="#006633"/><rect x="6" y="2" width="8" height="10" fill="#cc5500"/><rect x="6" y="4" width="8" height="6" fill="#ffbe00"/></svg>',
+  "+95":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fecb00"/><rect width="20" height="4.67" fill="#34b233"/><rect y="9.33" width="20" height="4.67" fill="#ea2839"/><polygon points="10,3 11,5 13,5 11.5,6.5 12,8.5 10,7 8,8.5 8.5,6.5 7,5 9,5" fill="#fff"/></svg>',
+  "+98":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#239f40"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/><polygon points="10,5 12,9 8,9" fill="#c8102e"/></svg>',
+  "+212":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#006233"/></svg>',
+  "+213":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect x="3" y="2" width="14" height="10" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+216":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><circle cx="10" cy="7" r="4" fill="#fff"/><circle cx="10" cy="7" r="3" fill="#c8102e"/><polygon points="10,4 11,6 13,6 11.5,7.5 12,9.5 10,8 8,9.5 8.5,7.5 7,6 9,6" fill="#c8102e"/></svg>',
+  "+220":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#006600"/><circle cx="10" cy="7" r="1.5" fill="#000"/></svg>',
+  "+221":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#006600"/><rect x="6.67" width="6.66" height="14" fill="#fcd116"/><rect x="13.33" width="6.67" height="14" fill="#c8102e"/><polygon points="10,3 11,5 13,5 11.5,6.5 12,8.5 10,7 8,8.5 8.5,6.5 7,5 9,5" fill="#006600"/></svg>',
+  "+224":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#c8102e"/><rect x="6.67" width="6.66" height="14" fill="#fcd116"/><rect x="13.33" width="6.67" height="14" fill="#006600"/></svg>',
+  "+225":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#ff8200"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#009e60"/></svg>',
+  "+226":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#009e60"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+227":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#c8102e"/><rect x="6.67" width="6.66" height="14" fill="#fcd116"/><rect x="13.33" width="6.67" height="14" fill="#006600"/><circle cx="10" cy="7" r="1.5" fill="#c8102e"/></svg>',
+  "+228":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#006a4e"/><rect y="9.33" width="20" height="4.67" fill="#006a4e"/><rect x="5" y="3" width="10" height="8" fill="#c8102e"/><rect x="8" y="2" width="4" height="10" fill="#fff"/><rect x="5" y="5" width="10" height="4" fill="#fff"/></svg>',
+  "+229":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#006600"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+230":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#0039a6"/><polygon points="10,4 11.5,7 14,7 12,9 12.5,12 10,10 7.5,12 8,9 6,7 8.5,7" fill="#fcd116"/></svg>',
+  "+231":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#006600"/><polygon points="10,4 11.5,7 14,7 12,9 12.5,12 10,10 7.5,12 8,9 6,7 8.5,7" fill="#000"/></svg>',
+  "+232":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#006600"/><rect x="13.33" width="6.67" height="14" fill="#0039a6"/></svg>',
+  "+233":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="4.67" fill="#ce1126"/><rect y="4.67" width="20" height="4.66" fill="#fcd116"/><rect y="9.33" width="20" height="4.67" fill="#006b3f"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#000"/></svg>',
+  "+234":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#008751"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#008751"/></svg>',
+  "+235":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#002664"/><rect y="2" width="20" height="10" fill="#fff"/><rect y="4" width="20" height="6" fill="#c8102e"/></svg>',
+  "+236":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#003082"/><rect y="4.67" width="20" height="4.66" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#fcd116"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+237":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#007a5e"/><rect x="6.67" width="6.66" height="14" fill="#c8102e"/><rect x="13.33" width="6.67" height="14" fill="#fcd116"/><polygon points="10,3 11,5 13,5 11.5,6.5 12,8.5 10,7 8,8.5 8.5,6.5 7,5 9,5" fill="#fcd116"/></svg>',
+  "+238":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#003893"/><rect x="13.33" width="6.67" height="14" fill="#cf2027"/><circle cx="10" cy="7" r="2.5" fill="#003893"/></svg>',
+  "+239":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect x="4" y="2" width="12" height="10" fill="#0039a6"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+240":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#006600"/><rect x="13.33" width="6.67" height="14" fill="#c8102e"/></svg>',
+  "+241":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="2" width="20" height="10" fill="#009e60"/><rect y="4" width="20" height="6" fill="#fcd116"/></svg>',
+  "+242":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#009543"/><rect y="4.67" width="20" height="4.66" fill="#fbde4a"/><polygon points="10,0 0,14 20,14" fill="#dc143c"/></svg>',
+  "+243":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#007fff"/><rect x="4" y="0" width="12" height="14" fill="#f7d618"/><rect x="8" y="0" width="4" height="14" fill="#ce1021"/></svg>',
+  "+244":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#000"/><rect y="9.33" width="20" height="4.67" fill="#fcd116"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+245":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#c8102e"/><rect x="6.67" width="6.66" height="14" fill="#fcd116"/><rect x="13.33" width="6.67" height="14" fill="#006600"/></svg>',
+  "+249":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#000"/><rect y="2" width="8" height="10" fill="#006600"/></svg>',
+  "+250":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="4.67" width="20" height="4.66" fill="#00a650"/><rect y="9.33" width="20" height="4.67" fill="#20603d"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#00a650"/></svg>',
+  "+251":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#006600"/><rect x="13.33" width="6.67" height="14" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#0039a6"/></svg>',
+  "+252":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#4189dd"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+253":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#006b3f"/><rect x="5" y="2" width="10" height="10" fill="#fff"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#006b3f"/></svg>',
+  "+254":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="4.67" fill="#000"/><rect y="4.67" width="20" height="4.66" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#006600"/><polygon points="10,7 12.5,11 7.5,11" fill="#fff"/><rect x="9.5" width="1" height="14" fill="#fff"/></svg>',
+  "+255":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#00a650"/><rect y="9.33" width="20" height="4.67" fill="#0039a6"/><rect x="8" y="2" width="4" height="10" fill="#fcd116"/></svg>',
+  "+256":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fcd116"/><rect y="4.67" width="20" height="4.66" fill="#000"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+257":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#006600"/></svg>',
+  "+258":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#c8102e"/><rect x="13.33" width="6.67" height="14" fill="#c8102e"/><polygon points="10,1 12,7 18,7 13,10 14.5,16 10,12.5 5.5,16 7,10 2,7 8,7" fill="#fcd116"/></svg>',
+  "+260":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#198a00"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/><polygon points="10,3 11,5.5 14,5.5 11.5,7.5 12.5,10 10,8 7.5,10 8.5,7.5 6,5.5 9,5.5" fill="#fcd116"/></svg>',
+  "+263":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#006600"/><rect y="9.33" width="20" height="4.67" fill="#fcd116"/><rect x="5" y="2" width="10" height="10" fill="#000"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+351":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#006600"/><rect x="13.33" width="6.67" height="14" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+352":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#00a1de"/></svg>',
+  "+353":
+    '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#009a44"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#ff7900"/></svg>',
+  "+354":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#003897"/><rect x="8" y="0" width="4" height="14" fill="#fff"/><rect y="5" width="20" height="4" fill="#fff"/><rect x="9.5" y="0" width="1" height="14" fill="#d72828"/><rect y="6.5" width="20" height="1" fill="#d72828"/></svg>',
+  "+355":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#000"/></svg>',
+  "+356":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#c8102e"/><rect x="13.33" width="6.67" height="14" fill="#c8102e"/></svg>',
+  "+357":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="4.67" width="20" height="4.66" fill="#c8102e"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#006600"/></svg>',
+  "+358":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect x="8" y="0" width="4" height="14" fill="#003580"/><rect y="5" width="20" height="4" fill="#003580"/></svg>',
+  "+359":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#00966e"/><rect y="9.33" width="20" height="4.67" fill="#d62612"/></svg>',
+  "+370":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fdb913"/><rect y="4.67" width="20" height="4.66" fill="#006a44"/><rect y="9.33" width="20" height="4.67" fill="#c1272d"/></svg>',
+  "+371":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#9e3039"/><rect y="4.67" width="20" height="4.66" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#9e3039"/></svg>',
+  "+372":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#0072ce"/><rect x="8" y="0" width="4" height="14" fill="#000"/><rect y="5" width="20" height="4" fill="#fff"/></svg>',
+  "+373":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#0039a6"/><rect y="4.67" width="20" height="4.66" fill="#fcd116"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+374":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#f7a800"/></svg>',
+  "+375":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#006600"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+376":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#0039a6"/><rect y="4.67" width="20" height="4.66" fill="#fcd116"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+381":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#fff"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+382":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#fcd116"/><rect y="9.33" width="20" height="4.67" fill="#0039a6"/></svg>',
+  "+385":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect x="5" y="2" width="10" height="10" fill="#fff"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+386":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#0039a6"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+387":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#0039a6"/><rect y="2" width="20" height="10" fill="#fcd116"/><polygon points="8,0 0,7 8,14 8,0" fill="#0039a6"/></svg>',
+  "+389":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#0039a6"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+420":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="4.67" width="20" height="4.66" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/><polygon points="8,0 0,7 8,14 8,0" fill="#0039a6"/></svg>',
+  "+421":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="4.67" width="20" height="4.66" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+423":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect x="8" y="0" width="4" height="14" fill="#fff"/><rect y="5" width="20" height="4" fill="#fff"/></svg>',
+  "+43":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+45":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect x="8" y="0" width="4" height="14" fill="#fff"/><rect y="5" width="20" height="4" fill="#fff"/></svg>',
+  "+46":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#005baa"/><rect x="8" y="0" width="4" height="14" fill="#fcd116"/><rect y="5" width="20" height="4" fill="#fcd116"/></svg>',
+  "+47":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect x="8" y="0" width="4" height="14" fill="#fff"/><rect y="5" width="20" height="4" fill="#fff"/><rect x="9.5" y="0" width="1" height="14" fill="#0039a6"/><rect y="6.5" width="20" height="1" fill="#0039a6"/></svg>',
+  "+48":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+51":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="4.67" width="20" height="4.66" fill="#c8102e"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+53":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#0039a6"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+54":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="4.67" width="20" height="4.66" fill="#75aadb"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fcd116"/></svg>',
+  "+56":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect x="5" y="2" width="10" height="10" fill="#0039a6"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+57":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fcd116"/><rect y="4.67" width="20" height="4.66" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/></svg>',
+  "+58":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fcd116"/><rect y="4.67" width="20" height="4.66" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+60":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#cc0000"/><rect width="6.67" height="7" fill="#000"/><polygon points="3.33,1 4,2.5 6,2.5 4.5,3.5 5,5 3.33,4 1.67,5 2.17,3.5 0.67,2.5 2.67,2.5" fill="#fcd116"/></svg>',
+  "+66":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="2" width="20" height="10" fill="#fff"/><rect y="4" width="20" height="6" fill="#0039a6"/></svg>',
+  "+81":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><circle cx="10" cy="7" r="4" fill="#bc002d"/></svg>',
+  "+82":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect x="6" y="2" width="8" height="10" fill="#003478"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+84":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fcd116"/></svg>',
+  "+880":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#006a4e"/><circle cx="10" cy="7" r="3.5" fill="#f42a41"/></svg>',
+  "+886":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect x="8" y="2" width="4" height="10" fill="#fff"/><rect y="6" width="20" height="2" fill="#fff"/><polygon points="10,2 11.5,5 14,5 12,7 12.5,10 10,8 7.5,10 8,7 6,5 8.5,5" fill="#0039a6"/></svg>',
+  "+960":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect x="5" y="2" width="10" height="10" fill="#006600"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+961":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect y="4.67" width="20" height="4.66" fill="#fff"/><rect y="9.33" width="20" height="4.67" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#006600"/></svg>',
+  "+962":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#000"/><rect y="9.33" width="20" height="4.67" fill="#006600"/><polygon points="8,0 0,7 8,14 8,0" fill="#c8102e"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+963":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#000"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#006600"/></svg>',
+  "+964":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#000"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#006600"/></svg>',
+  "+965":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#006600"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#000"/></svg>',
+  "+966":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#006c35"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#fff"/></svg>',
+  "+967":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="20" height="4.67" fill="#c8102e"/><rect y="9.33" width="20" height="4.67" fill="#000"/></svg>',
+  "+968":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#c8102e"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#006600"/><polygon points="10,3 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#c8102e"/></svg>',
+  "+971":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect width="6.67" height="14" fill="#006600"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#000"/></svg>',
+  "+972":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="4.67" width="20" height="4.66" fill="#fff"/><polygon points="10,2 11.5,6 14,6 12,8 12.5,11 10,9 7.5,11 8,8 6,6 8.5,6" fill="#0039a6"/></svg>',
+  "+973":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#c8102e"/><rect x="5" y="0" width="10" height="14" fill="#fff"/><polygon points="8,0 0,7 8,14 8,0" fill="#c8102e"/></svg>',
+  "+974":
+    '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#8d1b3d"/><rect x="5" y="2" width="10" height="10" fill="#fff"/><polygon points="8,0 0,7 8,14 8,0" fill="#8d1b3d"/></svg>',
 };
 
-const fadeUpItem: Variants = { // <-- Added : Variants
-    hidden: { opacity: 0, y: 20 }, 
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } } 
-};
+const flag = (code: string) => (
+  <span
+    className="inline-block w-6 h-4 rounded overflow-hidden align-middle"
+    dangerouslySetInnerHTML={{ __html: flagSvgs[code] || "" }}
+  />
+);
+
+const countryCodes = [
+  { code: "+1", country: "US", name: "United States" },
+  { code: "+7", country: "RU", name: "Russia" },
+  { code: "+20", country: "EG", name: "Egypt" },
+  { code: "+27", country: "ZA", name: "South Africa" },
+  { code: "+31", country: "NL", name: "Netherlands" },
+  { code: "+32", country: "BE", name: "Belgium" },
+  { code: "+33", country: "FR", name: "France" },
+  { code: "+34", country: "ES", name: "Spain" },
+  { code: "+39", country: "IT", name: "Italy" },
+  { code: "+41", country: "CH", name: "Switzerland" },
+  { code: "+43", country: "AT", name: "Austria" },
+  { code: "+44", country: "GB", name: "United Kingdom" },
+  { code: "+45", country: "DK", name: "Denmark" },
+  { code: "+46", country: "SE", name: "Sweden" },
+  { code: "+47", country: "NO", name: "Norway" },
+  { code: "+48", country: "PL", name: "Poland" },
+  { code: "+49", country: "DE", name: "Germany" },
+  { code: "+51", country: "PE", name: "Peru" },
+  { code: "+52", country: "MX", name: "Mexico" },
+  { code: "+53", country: "CU", name: "Cuba" },
+  { code: "+54", country: "AR", name: "Argentina" },
+  { code: "+55", country: "BR", name: "Brazil" },
+  { code: "+56", country: "CL", name: "Chile" },
+  { code: "+57", country: "CO", name: "Colombia" },
+  { code: "+58", country: "VE", name: "Venezuela" },
+  { code: "+60", country: "MY", name: "Malaysia" },
+  { code: "+61", country: "AU", name: "Australia" },
+  { code: "+62", country: "ID", name: "Indonesia" },
+  { code: "+63", country: "PH", name: "Philippines" },
+  { code: "+64", country: "NZ", name: "New Zealand" },
+  { code: "+65", country: "SG", name: "Singapore" },
+  { code: "+66", country: "TH", name: "Thailand" },
+  { code: "+81", country: "JP", name: "Japan" },
+  { code: "+82", country: "KR", name: "South Korea" },
+  { code: "+84", country: "VN", name: "Vietnam" },
+  { code: "+86", country: "CN", name: "China" },
+  { code: "+90", country: "TR", name: "Turkey" },
+  { code: "+91", country: "IN", name: "India" },
+  { code: "+92", country: "PK", name: "Pakistan" },
+  { code: "+93", country: "AF", name: "Afghanistan" },
+  { code: "+94", country: "LK", name: "Sri Lanka" },
+  { code: "+95", country: "MM", name: "Myanmar" },
+  { code: "+98", country: "IR", name: "Iran" },
+  { code: "+212", country: "MA", name: "Morocco" },
+  { code: "+213", country: "DZ", name: "Algeria" },
+  { code: "+216", country: "TN", name: "Tunisia" },
+  { code: "+220", country: "GM", name: "Gambia" },
+  { code: "+221", country: "SN", name: "Senegal" },
+  { code: "+224", country: "GN", name: "Guinea" },
+  { code: "+225", country: "CI", name: "Côte d'Ivoire" },
+  { code: "+226", country: "BF", name: "Burkina Faso" },
+  { code: "+227", country: "NE", name: "Niger" },
+  { code: "+228", country: "TG", name: "Togo" },
+  { code: "+229", country: "BJ", name: "Benin" },
+  { code: "+230", country: "MU", name: "Mauritius" },
+  { code: "+231", country: "LR", name: "Liberia" },
+  { code: "+232", country: "SL", name: "Sierra Leone" },
+  { code: "+233", country: "GH", name: "Ghana" },
+  { code: "+234", country: "NG", name: "Nigeria" },
+  { code: "+235", country: "TD", name: "Chad" },
+  { code: "+236", country: "CF", name: "Central African Republic" },
+  { code: "+237", country: "CM", name: "Cameroon" },
+  { code: "+238", country: "CV", name: "Cape Verde" },
+  { code: "+239", country: "ST", name: "São Tomé & Príncipe" },
+  { code: "+240", country: "GQ", name: "Equatorial Guinea" },
+  { code: "+241", country: "GA", name: "Gabon" },
+  { code: "+242", country: "CG", name: "Congo" },
+  { code: "+243", country: "CD", name: "DR Congo" },
+  { code: "+244", country: "AO", name: "Angola" },
+  { code: "+245", country: "GW", name: "Guinea-Bissau" },
+  { code: "+249", country: "SD", name: "Sudan" },
+  { code: "+250", country: "RW", name: "Rwanda" },
+  { code: "+251", country: "ET", name: "Ethiopia" },
+  { code: "+252", country: "SO", name: "Somalia" },
+  { code: "+253", country: "DJ", name: "Djibouti" },
+  { code: "+254", country: "KE", name: "Kenya" },
+  { code: "+255", country: "TZ", name: "Tanzania" },
+  { code: "+256", country: "UG", name: "Uganda" },
+  { code: "+257", country: "BI", name: "Burundi" },
+  { code: "+258", country: "MZ", name: "Mozambique" },
+  { code: "+260", country: "ZM", name: "Zambia" },
+  { code: "+263", country: "ZW", name: "Zimbabwe" },
+  { code: "+351", country: "PT", name: "Portugal" },
+  { code: "+352", country: "LU", name: "Luxembourg" },
+  { code: "+353", country: "IE", name: "Ireland" },
+  { code: "+354", country: "IS", name: "Iceland" },
+  { code: "+355", country: "AL", name: "Albania" },
+  { code: "+356", country: "MT", name: "Malta" },
+  { code: "+357", country: "CY", name: "Cyprus" },
+  { code: "+358", country: "FI", name: "Finland" },
+  { code: "+359", country: "BG", name: "Bulgaria" },
+  { code: "+370", country: "LT", name: "Lithuania" },
+  { code: "+371", country: "LV", name: "Latvia" },
+  { code: "+372", country: "EE", name: "Estonia" },
+  { code: "+373", country: "MD", name: "Moldova" },
+  { code: "+374", country: "AM", name: "Armenia" },
+  { code: "+375", country: "BY", name: "Belarus" },
+  { code: "+376", country: "AD", name: "Andorra" },
+  { code: "+381", country: "RS", name: "Serbia" },
+  { code: "+382", country: "ME", name: "Montenegro" },
+  { code: "+385", country: "HR", name: "Croatia" },
+  { code: "+386", country: "SI", name: "Slovenia" },
+  { code: "+387", country: "BA", name: "Bosnia & Herzegovina" },
+  { code: "+389", country: "MK", name: "North Macedonia" },
+  { code: "+420", country: "CZ", name: "Czech Republic" },
+  { code: "+421", country: "SK", name: "Slovakia" },
+  { code: "+423", country: "LI", name: "Liechtenstein" },
+  { code: "+880", country: "BD", name: "Bangladesh" },
+  { code: "+886", country: "TW", name: "Taiwan" },
+  { code: "+960", country: "MV", name: "Maldives" },
+  { code: "+961", country: "LB", name: "Lebanon" },
+  { code: "+962", country: "JO", name: "Jordan" },
+  { code: "+963", country: "SY", name: "Syria" },
+  { code: "+964", country: "IQ", name: "Iraq" },
+  { code: "+965", country: "KW", name: "Kuwait" },
+  { code: "+966", country: "SA", name: "Saudi Arabia" },
+  { code: "+967", country: "YE", name: "Yemen" },
+  { code: "+968", country: "OM", name: "Oman" },
+  { code: "+971", country: "AE", name: "UAE" },
+  { code: "+972", country: "IL", name: "Israel" },
+  { code: "+973", country: "BH", name: "Bahrain" },
+  { code: "+974", country: "QA", name: "Qatar" },
+];
 
 export default function ContactPage() {
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCode, setSelectedCode] = useState(countryCodes[0]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        // Simulate API call
-        setTimeout(() => {
-            alert("Message sent successfully!");
-            setIsSubmitting(false);
-        }, 1500);
-    };
+  function setIsLoginOpen(_: boolean) {}
+  function setIsRegisterOpen(_: boolean) {}
 
-    return (
-        <div className="min-h-screen bg-appTitleBgColor pt-24 pb-16 px-4 relative overflow-hidden">
-            {/* Background Orbs */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-appBanner/10 blur-[100px] rounded-full pointer-events-none" />
+  return (
+    <div className="w-full flex flex-col relative">
+      <Header2
+        onLoginClick={() => setIsLoginOpen(true)}
+        onRegisterClick={() => setIsRegisterOpen(true)}
+      />
 
-            <div className="max-w-6xl mx-auto relative z-10">
-                <div className="text-center mb-16">
-                    <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-                        Get in <span className="text-appBanner">Touch</span>
-                    </motion.h1>
-                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-gray-400 text-lg max-w-2xl mx-auto">
-                        Whether you have a question about shipping rates, customs, or your current package, our team is ready to help.
-                    </motion.p>
+      <Banner
+        image={contactBanner}
+        title="Contact Us"
+        description="Hire us, lets help you grow your ideas into World-class Enterprise"
+        alt="Contact Banner"
+      />
+
+      <section className="w-full py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-2 items-stretch">
+          <div>
+            <h5 className="text-2xl sm:text-3xl font-bold text-appTitleBgColor mb-8">
+              Let's connect to help you and your team.
+            </h5>
+            <form className="space-y-3">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  Your Name
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 focus:ring-1 focus:ring-appBanner focus:outline-none"
+                  placeholder="John Doe"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  Company
+                </label>
+                <input
+                  required
+                  type="text"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 focus:ring-1 focus:ring-appBanner focus:outline-none"
+                  placeholder="Company Name"
+                />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    Email Address
+                  </label>
+                  <input
+                    required
+                    type="email"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 focus:ring-1 focus:ring-appBanner focus:outline-none"
+                    placeholder="john@example.com"
+                  />
                 </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    {/* Left Side: Contact Info */}
-                    <motion.div initial="hidden" animate="show" variants={staggerContainer} className="space-y-8">
-                        <motion.div variants={fadeUpItem} className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-sm">
-                            <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
-                            <div className="space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-appBanner/20 rounded-xl flex items-center justify-center text-appBanner shrink-0"><MapPin className="w-6 h-6" /></div>
-                                    <div>
-                                        <h4 className="text-white font-bold mb-1">Global Hub</h4>
-                                        <p className="text-gray-400 text-sm">123 Logistics Way, Suite 400<br/>New Castle, DE 19720, USA</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-appBanner/20 rounded-xl flex items-center justify-center text-appBanner shrink-0"><Mail className="w-6 h-6" /></div>
-                                    <div>
-                                        <h4 className="text-white font-bold mb-1">Email Us</h4>
-                                        <p className="text-gray-400 text-sm">support@bulq.com<br/>partnerships@bulq.com</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="w-12 h-12 bg-appBanner/20 rounded-xl flex items-center justify-center text-appBanner shrink-0"><Phone className="w-6 h-6" /></div>
-                                    <div>
-                                        <h4 className="text-white font-bold mb-1">Call Us</h4>
-                                        <p className="text-gray-400 text-sm">+1 (800) 123-4567<br/>Mon-Fri, 9am - 6pm EST</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-
-                    {/* Right Side: Form */}
-                    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="bg-white p-8 md:p-10 rounded-3xl shadow-xl">
-                        <h3 className="text-2xl font-bold text-appTitleBgColor mb-6">Send us a Message</h3>
-                        <form onSubmit={handleSubmit} className="space-y-5">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">First Name</label>
-                                    <input required type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-appBanner focus:outline-none" placeholder="John" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-2">Last Name</label>
-                                    <input required type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-appBanner focus:outline-none" placeholder="Doe" />
-                                </div>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
-                                <input required type="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-appBanner focus:outline-none" placeholder="john@example.com" />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Message</label>
-                                <textarea required rows={4} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-appBanner focus:outline-none resize-none" placeholder="How can we help you today?"></textarea>
-                            </div>
-                            <motion.button 
-                                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                                type="submit" 
-                                disabled={isSubmitting}
-                                className="w-full bg-gradient-to-r from-appBanner to-appNav text-white py-4 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 disabled:opacity-70"
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    Phone Number
+                  </label>
+                  <div className="flex gap-1">
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        className="flex items-center gap-2 bg-gray-50 border border-gray-200 px-[15px] py-[13.5px] focus:ring-1 focus:ring-appBanner focus:outline-none text-sm min-w-[96px]"
+                      >
+                        {flag(selectedCode.code)}
+                        <span>{selectedCode.code}</span>
+                        <svg
+                          className="w-3 h-3 ml-1 text-gray-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </button>
+                      {dropdownOpen && (
+                        <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 shadow-lg z-20 min-w-[200px] max-h-[250px] overflow-y-auto">
+                          {countryCodes.map((c) => (
+                            <button
+                              key={c.code}
+                              type="button"
+                              onClick={() => {
+                                setSelectedCode(c);
+                                setDropdownOpen(false);
+                              }}
+                              className={`flex items-center gap-2 w-full px-3 py-2.5 text-sm hover:bg-gray-50 text-left ${selectedCode.code === c.code ? "bg-gray-100" : ""}`}
                             >
-                                {isSubmitting ? "Sending..." : <><Send className="w-5 h-5" /> Send Message</>}
-                            </motion.button>
-                        </form>
-                    </motion.div>
+                              {flag(c.code)}
+                              <span>
+                                {c.code}{" "}
+                                <span className="text-gray-500">{c.name}</span>
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <input
+                      required
+                      type="tel"
+                      className="w-full px-4 py-[15px] bg-gray-50 border border-gray-200 focus:ring-1 focus:ring-appBanner focus:outline-none h-full"
+                      placeholder="Phone Number"
+                    />
+                  </div>
                 </div>
-            </div>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  How can we help? Type Below.
+                </label>
+                <textarea
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 focus:ring-1 focus:ring-appBanner focus:outline-none resize-none"
+                  placeholder="Tell us about your project..."
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-appBanner text-white py-3 font-bold shadow-lg hover:bg-appNav transition-all duration-300"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+          <div className="relative w-4/5 mx-auto h-full min-h-[450px] sm:min-h-[550px] overflow-hidden">
+            <Image
+              src={contactImg}
+              alt="Contact"
+              fill
+              className="object-contain"
+            />
+          </div>
         </div>
-    );
+      </section>
+
+      <Footer />
+    </div>
+  );
 }
