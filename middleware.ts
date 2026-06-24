@@ -26,6 +26,7 @@ export default async function middleware(req: NextRequest) {
     NAVIGATION.PRICING.toString(),
     NAVIGATION.OUR_TEAM.toString(),
     NAVIGATION.CASE_STUDIES.toString(),
+    NAVIGATION.ABOUT_US.toString(),
     
     // Driver Public Entry Pages
     NAVIGATION.DRIVERSWEB?.toString(), 
