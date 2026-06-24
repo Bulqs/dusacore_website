@@ -306,6 +306,7 @@ export enum NAVIGATION {
   DRIVERBUSINESS = `/driver/driverbusiness`,
   FAQ = `/faq`,
   CONTACT = `/contact`,
+  OUR_TEAM = `/our-team`,
   HOW_IT_WORKS = `/how-it-works`,
   SERVICES = `/services`,
   PRICING = `/pricing`,

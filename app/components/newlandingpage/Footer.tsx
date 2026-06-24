@@ -68,7 +68,7 @@ const Footer = () => {
             {/* =========================================
                 NEW FULL-WIDTH CTA BANNER 
             ========================================= */}
-            <section className="w-full bg-appPurple py-16 md:py-24 px-6 flex flex-col items-center justify-center text-center relative z-20 mt-[100px]">
+            <section className="w-full bg-appPurple py-16 md:py-24 px-6 flex flex-col items-center justify-center text-center relative z-20">
                 {/* 1. Top Div: Bold Headline */}
                 <div className="mb-4">
                     <h2 className="text-montserrat text-appWhite font-bold text-3xl md:text-5xl tracking-wide">

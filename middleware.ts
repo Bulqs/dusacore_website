@@ -24,6 +24,7 @@ export default async function middleware(req: NextRequest) {
     NAVIGATION.HOW_IT_WORKS.toString(),
     NAVIGATION.CONTACT.toString(),
     NAVIGATION.PRICING.toString(),
+    NAVIGATION.OUR_TEAM.toString(),
     
     // Fallback static strings just in case the ENUMs fail
     // "/signin",
