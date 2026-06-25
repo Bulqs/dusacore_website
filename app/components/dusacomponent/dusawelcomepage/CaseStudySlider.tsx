@@ -35,8 +35,11 @@ export default function CaseStudySlider() {
     };
 
     return (
-        <section className="w-full bg-white py-16 px-4 sm:px-6 lg:px-8">
+        <section className="w-full bg-white py-4 sm:py-8 lg:py-16 px-4 sm:px-6 lg:px-8">
             <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
+            <h2 className="text-3xl sm:text-4xl font-bold text-appTitleBgColor mb-12 text-center">
+                Our <span className="text-appBanner">Case Studies</span>
+            </h2>
             <div className="max-w-7xl mx-auto relative">
                 <div
                     ref={scrollRef}
@@ -46,7 +49,7 @@ export default function CaseStudySlider() {
                     {caseStudies.map((item, index) => (
                         <div
                             key={index}
-                            className="min-w-[calc(100%-2rem)] sm:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.5rem)] snap-start flex-shrink-0 bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+                            className="min-w-[calc(100%-2rem)] sm:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.5rem)] max-w-[300px] snap-start flex-shrink-0 bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
                         >
                             <div className="relative w-full h-56">
                                 <Image
@@ -56,14 +59,14 @@ export default function CaseStudySlider() {
                                     className="object-cover"
                                 />
                             </div>
-                            <div className="p-6 flex flex-col gap-3">
-                                <h6 className="text-appTitleBgColor font-bold text-base uppercase tracking-wide">
+                            <div className="p-6 flex flex-col gap-3 bg-appNav">
+                                <h6 className="text-white font-bold text-base uppercase tracking-wide">
                                     {item.title}
                                 </h6>
-                                <p className="text-gray-600 text-sm leading-relaxed">
+                                <p className="text-white text-sm leading-relaxed font-semibold">
                                     {item.description}
                                 </p>
-                                <button className="mt-2 self-start bg-appTitleBgColor text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-appNav transition-colors">
+                                <button className="mt-2 self-start bg-appPurple text-white px-5 py-2 rounded-full text-sm font-bold border border-transparent hover:bg-appNav hover:shadow-lg hover:border-white transition-all">
                                     Read More
                                 </button>
                             </div>

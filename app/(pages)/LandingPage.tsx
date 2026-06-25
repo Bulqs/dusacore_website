@@ -1,6 +1,6 @@
 import React from 'react'
 import Header2 from '../components/dusacomponent/Header2'
-import Banner from '../components/newlandingpage/Banner'
+import Banner from '../components/dusacomponent/dusawelcomepage/WelcomePageBanner'
 // import TrackingSearch from '../components/newlandingpage/TrackingSearch'
 import BannerWithTracking from '../components/newlandingpage/PartnersMarquee'
 // import HowItWorks from '../components/newlandingpage/HowItWorks'

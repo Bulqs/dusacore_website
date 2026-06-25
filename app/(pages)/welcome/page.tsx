@@ -3,11 +3,14 @@ import Header2 from '@/app/components/dusacomponent/Header2';
 import React, { useState } from 'react'
 import SignUpWithBulq from '@/app/components/newlandingpage/SignUpWithBulq';
 import Footer from '@/app/components/dusacomponent/Footer'
-import Banner from '@/app/components/newlandingpage/Banner';
+import Banner from '@/app/components/dusacomponent/dusawelcomepage/WelcomePageBanner';
 import BannerWithStrip from '@/app/components/newlandingpage/PartnersMarquee';
 import PartnersMarquee from '@/app/components/newlandingpage/PartnersMarquee';
-import TestimonialCard from '@/app/components/dusacomponent/TestimonialCard';
-import CaseStudySlider from '@/app/components/dusacomponent/CaseStudySlider';
+import TestimonialCard from '@/app/components/dusacomponent/dusawelcomepage/TestimonialCard';
+import CaseStudySlider from '@/app/components/dusacomponent/dusawelcomepage/CaseStudySlider';
+import WhatWeDo from '@/app/components/dusacomponent/WhatWeDo';
+import AboutUsSection from '@/app/components/dusacomponent/dusawelcomepage/AboutUsSection';
+import WhyChooseUs from '@/app/components/dusacomponent/dusawelcomepage/WhyChooseUs';
 
 // ... (your landing page imports)
 // import RegisterModal from '../components/RegisterModal' 
@@ -29,8 +32,11 @@ const LandingPage = () => {
       />
       <Banner />
       <PartnersMarquee />
+      <WhatWeDo />
+      <AboutUsSection />
+      <WhyChooseUs />
       <CaseStudySlider />
-      <section className="w-full bg-white py-16 px-4 sm:px-6 lg:px-8">
+      <section className="w-full bg-white py-4 sm:py-8 lg:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-appTitleBgColor mb-12 text-center">
             Client <span className="text-appBanner">Testimonials</span>
