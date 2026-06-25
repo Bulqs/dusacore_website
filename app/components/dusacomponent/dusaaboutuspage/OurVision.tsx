@@ -1,6 +1,6 @@
 import React from 'react';
 import visionImg from '@/public/images/dusacoreimages/dusavision.jpg';
-import ImageTextSection from '@/app/components/dusacomponent/ImageTextSection';
+import ImageTextSection from '@/app/components/dusacomponent/dusawelcomepage/ImageTextSection';
 
 export default function OurVision() {
     return (

@@ -7,7 +7,7 @@ import Banner from '@/app/components/dusacomponent/Banner';
 import WhoWeAre from '@/app/components/dusacomponent/dusaaboutuspage/WhoWeAre';
 import OurVision from '@/app/components/dusacomponent/dusaaboutuspage/OurVision';
 import OurMission from '@/app/components/dusacomponent/dusaaboutuspage/OurMission';
-import WhatWeDo from '@/app/components/dusacomponent/dusaaboutuspage/WhatWeDo';
+import WhatWeDo from '@/app/components/dusacomponent/WhatWeDo';
 import Footer from '@/app/components/dusacomponent/Footer';
 
 export default function AboutUsPage() {

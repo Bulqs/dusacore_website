@@ -5,7 +5,7 @@ import { motion, Variants } from 'framer-motion';
 import Header2 from '@/app/components/dusacomponent/Header2';
 import Footer from '@/app/components/dusacomponent/Footer';
 import Banner from '@/app/components/dusacomponent/Banner';
-import ImageTextSection from '@/app/components/dusacomponent/ImageTextSection';
+import ImageTextSection from '@/app/components/dusacomponent/dusawelcomepage/ImageTextSection';
 import PartnersMarquee from '@/app/components/newlandingpage/PartnersMarquee';
 import caseBanner from '@/public/images/dusacoreimages/dusacoreabout.jpg';
 import caseImg from '@/public/images/dusacoreimages/communication.jpg';

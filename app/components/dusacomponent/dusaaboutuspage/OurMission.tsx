@@ -1,6 +1,6 @@
 import React from 'react';
 import missionImg from '@/public/images/dusacoreimages/dusamission.jpg';
-import ImageTextSection from '@/app/components/dusacomponent/ImageTextSection';
+import ImageTextSection from '@/app/components/dusacomponent/dusawelcomepage/ImageTextSection';
 
 export default function OurMission() {
     return (

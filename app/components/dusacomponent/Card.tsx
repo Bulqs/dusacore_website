@@ -21,12 +21,12 @@ export default function Card({ icon: Icon, title, description, readMoreHref, bgC
             <h4 className="text-xl sm:text-2xl font-bold text-white mb-3">
                 {title}
             </h4>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-6">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-6 text-justify font-semibold">
                 {description}
             </p>
             <a
                 href={readMoreHref}
-                className="mt-auto inline-flex items-center gap-2 text-white font-semibold hover:opacity-80 transition-opacity"
+                className="mt-auto inline-flex items-center gap-2 text-white font-semibold border border-transparent hover:bg-white hover:text-appPurple hover:border-white px-4 py-2 rounded-full transition-all"
             >
                 Read More
                 <ArrowRight className="w-5 h-5" />
