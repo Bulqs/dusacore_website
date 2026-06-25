@@ -27,7 +27,7 @@ export default function ImageTextSection({
 }: ImageTextSectionProps) {
     return (
         <section className="w-full bg-white">
-            <div className="mx-auto grid grid-cols-1 lg:grid-cols-2 items-stretch">
+            <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-2 items-stretch">
                 <div
                     className={`relative w-full min-h-[250px] sm:min-h-[300px] lg:min-h-[400px] h-full overflow-hidden hidden sm:block ${
                         imageOnLeft ? 'order-2 lg:order-1' : 'order-2 lg:order-2'
