@@ -53,7 +53,7 @@ const Header2: React.FC<Header2Props> = ({ onLoginClick, onRegisterClick }) => {
                             <li key={item.name}>
                                 <Link
                                     href={item.href}
-                                    className="font-aeonik text-appNav hover:text-appLightPurple font-bold transition-all duration-200 text-xs xl:text-sm tracking-wide relative group"
+                                    className="font-aeonik text-appNav hover:text-appPurple font-bold transition-all duration-200 text-xs xl:text-sm tracking-wide relative group"
                                 >
                                     {item.name}
                                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-appNav transition-all duration-300 group-hover:w-full"></span>
@@ -101,7 +101,7 @@ const Header2: React.FC<Header2Props> = ({ onLoginClick, onRegisterClick }) => {
                                     <Link
                                         href={item.href}
                                         onClick={() => setMobileOpen(false)}
-                                        className="block font-aeonik text-appNav hover:text-appLightPurple hover:bg-purple-50 font-bold transition-all duration-200 text-sm tracking-wide px-4 py-1.5 rounded-lg"
+                                        className="block font-aeonik text-appNav hover:text-white hover:bg-appPurple font-bold transition-all duration-200 text-sm tracking-wide px-4 py-1.5 rounded-lg"
                                     >
                                         {item.name}
                                     </Link>
