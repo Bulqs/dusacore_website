@@ -7,6 +7,7 @@ import Banner from '@/app/components/newlandingpage/Banner';
 import BannerWithStrip from '@/app/components/newlandingpage/PartnersMarquee';
 import PartnersMarquee from '@/app/components/newlandingpage/PartnersMarquee';
 import TestimonialCard from '@/app/components/dusacomponent/TestimonialCard';
+import CaseStudySlider from '@/app/components/dusacomponent/CaseStudySlider';
 
 // ... (your landing page imports)
 // import RegisterModal from '../components/RegisterModal' 
@@ -28,6 +29,7 @@ const LandingPage = () => {
       />
       <Banner />
       <PartnersMarquee />
+      <CaseStudySlider />
       <section className="w-full bg-white py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-appTitleBgColor mb-12 text-center">
