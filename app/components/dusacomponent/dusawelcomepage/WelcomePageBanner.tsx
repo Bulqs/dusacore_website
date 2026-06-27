@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { FiX, FiCalendar } from 'react-icons/fi';
 
 // --- STAGGERED ENTRANCE ANIMATIONS ---
 const textContainerVariants: Variants = {
@@ -41,11 +43,23 @@ const shimmerVariants: Variants = {
     }
 };
 
+// --- MODAL ANIMATIONS ---
+const modalBackdrop: Variants = {
+    hidden: { opacity: 0, backdropFilter: "blur(0px)" },
+    show: { opacity: 1, backdropFilter: "blur(8px)", transition: { duration: 0.3 } }
+};
+
+const modalContent: Variants = {
+    hidden: { scale: 0.95, opacity: 0, y: 20 },
+    show: { scale: 1, opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 25 } },
+    exit: { scale: 0.95, opacity: 0, y: 20, transition: { duration: 0.2 } }
+};
+
 const flagSvgs: Record<string, string> = {
   "+1": '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><rect y="2" width="20" height="2" fill="#b22234"/><rect y="6" width="20" height="2" fill="#b22234"/><rect y="10" width="20" height="2" fill="#b22234"/><rect width="8" height="7" fill="#3c3b6e"/><circle cx="2.5" cy="2" r="0.6" fill="#fff"/><circle cx="4" cy="2" r="0.6" fill="#fff"/><circle cx="5.5" cy="2" r="0.6" fill="#fff"/><circle cx="3.25" cy="3.3" r="0.6" fill="#fff"/><circle cx="4.75" cy="3.3" r="0.6" fill="#fff"/><circle cx="2.5" cy="4.6" r="0.6" fill="#fff"/><circle cx="4" cy="4.6" r="0.6" fill="#fff"/><circle cx="5.5" cy="4.6" r="0.6" fill="#fff"/></svg>',
   "+44": '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#012169"/><rect y="5" width="20" height="4" fill="#fff"/><rect x="8" width="4" height="14" fill="#fff"/><rect y="6.5" width="20" height="1" fill="#c8102e"/><rect x="9.5" width="1" height="14" fill="#c8102e"/></svg>',
   "+234": '<svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#008751"/><rect x="6.67" width="6.66" height="14" fill="#fff"/><rect x="13.33" width="6.67" height="14" fill="#008751"/></svg>',
-  // ... Include your full list of flags here (shortened for clarity in this snippet)
+  // (Your existing SVG flag library items remain intact here)
 };
 
 const flag = (code: string) => (
@@ -59,9 +73,63 @@ const countryCodes = [
   { code: "+1", country: "US", name: "United States" },
   { code: "+44", country: "GB", name: "United Kingdom" },
   { code: "+234", country: "NG", name: "Nigeria" },
-  // ... Include your full list of country codes here
+  // (Your existing country codes remain intact here)
 ];
 
+// ========================================================
+// CONSULTATION MODAL COMPONENT (INLINE GOOGLE CALENDAR)
+// ========================================================
+const ConsultationModal = ({ onClose }: { onClose: () => void }) => {
+    const [isLoading, setIsLoading] = useState(true);
+
+    return (
+        <motion.div variants={modalBackdrop} initial="hidden" animate="show" exit="hidden" className="fixed inset-0 bg-black/60 flex items-center justify-center z-[100] p-4 sm:p-6">
+            <motion.div variants={modalContent} className="bg-white rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden relative flex flex-col h-[85vh] max-h-[800px]">
+                
+                {/* Header */}
+                <div className="bg-gradient-to-br from-[#4B0163] to-[#8300AF] p-4 sm:p-6 text-white flex justify-between items-center shrink-0 relative z-10">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                            <FiCalendar size={20} />
+                        </div>
+                        <div>
+                            <h2 className="text-xl sm:text-2xl font-extrabold tracking-wide">Book a Consultation</h2>
+                            <p className="text-xs sm:text-sm font-medium text-white/80 mt-0.5 hidden sm:block">Select a time that works best for you.</p>
+                        </div>
+                    </div>
+                    <button onClick={onClose} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors flex-shrink-0">
+                        <FiX size={20} />
+                    </button>
+                </div>
+
+                {/* Google Calendar Iframe Container */}
+                <div className="flex-1 w-full bg-slate-50 relative overflow-hidden flex flex-col">
+                    {/* Loading Spinner */}
+                    {isLoading && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-400 bg-slate-50 z-10">
+                            <div className="w-8 h-8 border-4 border-[#4B0163] border-t-transparent rounded-full animate-spin mb-4"></div>
+                            <p className="text-sm font-bold animate-pulse">Loading Calendar...</p>
+                        </div>
+                    )}
+                    
+                    {/* Embedded Form for optimal UX */}
+                    <iframe 
+                        src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0eseMkYNDpPH0i9mjQTQkQcSe0ZJsXOyKzQomQLJzN7EVC-ackhxEFnf4x5zKe4_rk0PRC7YR4?gv=true" 
+                        style={{ border: 0 }} 
+                        width="100%" 
+                        height="100%" 
+                        className="flex-1 w-full h-full"
+                        onLoad={() => setIsLoading(false)}
+                    ></iframe>
+                </div>
+            </motion.div>
+        </motion.div>
+    );
+};
+
+// ========================================================
+// MAIN BANNER COMPONENT
+// ========================================================
 const Banner = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -70,6 +138,7 @@ const Banner = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let val = e.target.value.replace(/\D/g, ''); 
@@ -88,218 +157,229 @@ const Banner = () => {
     };
 
     return (
-        /* FIX 1: Removed max-h-[520px]. Changed to min-h-screen or min-h-[750px] so the container can breathe */
-        <section className='w-full relative min-h-[750px] lg:min-h-[85vh] py-16 sm:py-20 px-4 sm:px-6 md:px-12 flex items-center justify-center overflow-hidden bg-gradient-to-t from-appPurple via-appLightPurple via-40% to-white'>
-            
-            <div className='max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 w-full items-center justify-between relative z-10'>
+        <>
+            <section className='w-full relative min-h-[750px] lg:min-h-[85vh] py-16 sm:py-20 px-4 sm:px-6 md:px-12 flex items-center justify-center overflow-hidden bg-gradient-to-t from-appPurple via-appLightPurple via-40% to-white'>
                 
-                {/* =========================================
-                    LEFT COLUMN: Text & Buttons
-                ========================================= */}
-                <motion.div 
-                    variants={textContainerVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true }}
-                    className='flex flex-col w-full lg:w-[50%] gap-5 lg:gap-6'
-                >
-                    <motion.div variants={textItemVariants}>
-                        <h1 className='text-[#4B0163] font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight'>
-                            Building{' '}
-                            <motion.span 
-                                variants={shimmerVariants}
-                                initial="hidden"
-                                animate="show"
-                                className='inline-block text-transparent bg-clip-text'
-                                style={{
-                                    backgroundImage: "linear-gradient(90deg, #BA25EB 0%, #E89BFF 50%, #BA25EB 100%)",
-                                    backgroundSize: "200% auto"
-                                }}
-                            >
-                                Engineering
-                            </motion.span>{' '}
-                            Solutions That Deliver{' '}
-                            <motion.span 
-                                variants={shimmerVariants}
-                                initial="hidden"
-                                animate="show"
-                                className='inline-block text-transparent bg-clip-text'
-                                style={{
-                                    backgroundImage: "linear-gradient(90deg, #BA25EB 0%, #E89BFF 50%, #BA25EB 100%)",
-                                    backgroundSize: "200% auto"
-                                }}
-                            >
-                                Business
-                            </motion.span>{' '}
-                            Value.
-                        </h1>
-                    </motion.div>
-
-                    <motion.div variants={textItemVariants}>
-                        <p className='text-[#8300AF] text-lg md:text-xl font-medium leading-relaxed max-w-lg'>
-                            Helping businesses innovate, scale, and succeed through reliable, technology driven engineering solutions.
-                        </p>
-                    </motion.div>
-
-                    <motion.div variants={textItemVariants} className='flex flex-col sm:flex-row gap-4 mt-2'>
-                        <button className='bg-appPurple text-white px-8 py-3.5 rounded-xl font-bold text-base shadow-lg shadow-appPurple/30 hover:shadow-appPurple/50 hover:-translate-y-1 transition-all duration-300'>
-                            Book a consultation
-                        </button>
-                        <button className='bg-white/80 backdrop-blur-sm text-appPurple border-2 border-appPurple/20 px-8 py-3.5 rounded-xl font-bold text-base hover:bg-white hover:border-appPurple transition-all duration-300'>
-                            Explore Our Services
-                        </button>
-                    </motion.div>
-                </motion.div>
-
-                {/* =========================================
-                    RIGHT COLUMN: Floating Form
-                ========================================= */}
-                {/* FIX 2: Wrapped in two motion divs. The outer handles the slide-in. */}
-                <motion.div 
-                    variants={formEntranceVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true }}
-                    className='w-full lg:w-[45%] flex justify-center lg:justify-end relative z-20'
-                >
-                    {/* FIX 3: The inner div handles the continuous levitation effect & strict h-fit bounding */}
+                <div className='max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 w-full items-center justify-between relative z-10'>
+                    
+                    {/* =========================================
+                        LEFT COLUMN: Text & Buttons
+                    ========================================= */}
                     <motion.div 
-                        animate={{ y: [0, -12, 0] }}
-                        transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-                        className='bg-white/95 backdrop-blur-xl p-6 md:p-8 rounded-3xl w-full max-w-md flex flex-col gap-4 border border-white/60 h-fit'
-                        // Premium diffused shadow to detach it from the background
-                        style={{ boxShadow: '0 25px 50px -12px rgba(75, 1, 99, 0.25), 0 0 20px rgba(186, 37, 235, 0.1)' }}
+                        variants={textContainerVariants}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        className='flex flex-col w-full lg:w-[50%] gap-5 lg:gap-6'
                     >
-                        
-                        <div>
-                            <h3 className='text-appBlack font-extrabold text-xl md:text-2xl tracking-tight'>
-                                Let’s connect to help you and your team.
-                            </h3>
-                        </div>
+                        <motion.div variants={textItemVariants}>
+                            <h1 className='text-[#4B0163] font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight'>
+                                Building{' '}
+                                <motion.span 
+                                    variants={shimmerVariants}
+                                    initial="hidden"
+                                    animate="show"
+                                    className='inline-block text-transparent bg-clip-text'
+                                    style={{
+                                        backgroundImage: "linear-gradient(90deg, #BA25EB 0%, #E89BFF 50%, #BA25EB 100%)",
+                                        backgroundSize: "200% auto"
+                                    }}
+                                >
+                                    Engineering
+                                </motion.span>{' '}
+                                Solutions That Deliver{' '}
+                                <motion.span 
+                                    variants={shimmerVariants}
+                                    initial="hidden"
+                                    animate="show"
+                                    className='inline-block text-transparent bg-clip-text'
+                                    style={{
+                                        backgroundImage: "linear-gradient(90deg, #BA25EB 0%, #E89BFF 50%, #BA25EB 100%)",
+                                        backgroundSize: "200% auto"
+                                    }}
+                                >
+                                    Business
+                                </motion.span>{' '}
+                                Value.
+                            </h1>
+                        </motion.div>
 
-                        <form onSubmit={handleSubmit} className='flex flex-col gap-3.5'>
+                        <motion.div variants={textItemVariants}>
+                            <p className='text-[#8300AF] text-lg md:text-xl font-medium leading-relaxed max-w-lg'>
+                                Helping businesses innovate, scale, and succeed through reliable, technology driven engineering solutions.
+                            </p>
+                        </motion.div>
+
+                        <motion.div variants={textItemVariants} className='flex flex-col sm:flex-row gap-4 mt-2'>
+                            {/* Seamless Inline Modal Implementation */}
+                            <button 
+                                onClick={() => setIsModalOpen(true)}
+                                className='flex items-center justify-center text-center bg-appPurple text-white px-8 py-3.5 rounded-xl font-bold text-base shadow-lg shadow-appPurple/30 hover:shadow-appPurple/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer'
+                            >
+                                Book a consultation
+                            </button>
                             
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Your name</label>
-                                <input 
-                                    type="text" 
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="John Doe" 
-                                    className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-appBlack placeholder-gray-400 focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all'
-                                    required
-                                />
+                            {/* Updated to point directly to /aboutus */}
+                            <Link 
+                                href="/aboutus"
+                                className='flex items-center justify-center text-center bg-white/80 backdrop-blur-sm text-appPurple border-2 border-appPurple/20 px-8 py-3.5 rounded-xl font-bold text-base hover:bg-white hover:border-appPurple transition-all duration-300'
+                            >
+                                Explore Our Services
+                            </Link>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* =========================================
+                        RIGHT COLUMN: Floating Form
+                    ========================================= */}
+                    <motion.div 
+                        variants={formEntranceVariants}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        className='w-full lg:w-[45%] flex justify-center lg:justify-end relative z-20'
+                    >
+                        <motion.div 
+                            animate={{ y: [0, -12, 0] }}
+                            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                            className='bg-white/95 backdrop-blur-xl p-6 md:p-8 rounded-3xl w-full max-w-md flex flex-col gap-4 border border-white/60 h-fit'
+                            style={{ boxShadow: '0 25px 50px -12px rgba(75, 1, 99, 0.25), 0 0 20px rgba(186, 37, 235, 0.1)' }}
+                        >
+                            
+                            <div>
+                                <h3 className='text-appBlack font-extrabold text-xl md:text-2xl tracking-tight'>
+                                    Let’s connect to help you and your team.
+                                </h3>
                             </div>
 
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Email Address *</label>
-                                <input 
-                                    type="email" 
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="example@gmail.com" 
-                                    className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-appBlack placeholder-gray-400 focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all'
-                                    required
-                                />
-                            </div>
-
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Phone Number</label>
-                                <div className='flex flex-row w-full gap-2'>
-                                    <div className="relative">
-                                        <button
-                                            type="button"
-                                            onClick={() => setDropdownOpen(!dropdownOpen)}
-                                            className="flex items-center gap-1.5 bg-slate-50 border border-gray-200 rounded-xl px-3 py-2.5 hover:bg-gray-100 transition-colors"
-                                        >
-                                            {flag(selectedCode.code)}
-                                            <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                                            </svg>
-                                        </button>
-                                        {dropdownOpen && (
-                                            <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 w-[240px] max-h-[250px] overflow-y-auto p-1 custom-scrollbar">
-                                                {countryCodes.map((c) => (
-                                                    <button
-                                                        key={c.code}
-                                                        type="button"
-                                                        onClick={() => {
-                                                            setSelectedCode(c);
-                                                            setDropdownOpen(false);
-                                                        }}
-                                                        className={`flex items-center gap-3 w-full px-3 py-2.5 text-sm rounded-lg hover:bg-slate-50 text-left transition-colors ${selectedCode.code === c.code ? "bg-appLightPurple/20 text-appPurple font-bold" : ""}`}
-                                                    >
-                                                        {flag(c.code)}
-                                                        <span className="truncate">{c.name} <span className="text-gray-400 font-normal ml-1">({c.code})</span></span>
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        )}
-                                    </div>
+                            <form onSubmit={handleSubmit} className='flex flex-col gap-3.5'>
+                                
+                                <div className='flex flex-col gap-1.5'>
+                                    <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Your name</label>
                                     <input 
-                                        type="tel" 
-                                        value={phone}
-                                        onChange={handlePhoneChange}
-                                        placeholder="801 234 5678" 
+                                        type="text" 
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder="John Doe" 
                                         className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-appBlack placeholder-gray-400 focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all'
                                         required
                                     />
                                 </div>
-                            </div>
 
-                            <div className='flex flex-col gap-1.5 relative'>
-                                <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Area of Interest</label>
-                                <div className="relative">
-                                    <select 
-                                        value={areaOfInterest}
-                                        onChange={(e) => setAreaOfInterest(e.target.value)}
-                                        className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-appBlack focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all appearance-none cursor-pointer text-sm'
+                                <div className='flex flex-col gap-1.5'>
+                                    <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Email Address *</label>
+                                    <input 
+                                        type="email" 
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="example@gmail.com" 
+                                        className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-appBlack placeholder-gray-400 focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all'
                                         required
-                                    >
-                                        <option value="" disabled>Select an option...</option>
-                                        <option value="Software Engineering">Software Engineering</option>
-                                        <option value="AI & Data Infrastructure">AI & Data Infrastructure</option>
-                                        <option value="Cloud & DevOps">Cloud & DevOps</option>
-                                        <option value="Product Design">UI/UX & Product Design</option>
-                                        <option value="Logistics">Logistics</option>
-                                        <option value="Health">Health Tech</option>
-                                        <option value="Others">Others</option>
-                                    </select>
-                                    <svg className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                                    </svg>
+                                    />
                                 </div>
-                            </div>
 
-                            <div className='flex flex-col gap-1.5'>
-                                <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>How can we help?</label>
-                                <textarea 
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    rows={2}
-                                    placeholder="Briefly describe your project..."
-                                    className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-appBlack placeholder-gray-400 focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all resize-none'
-                                    required
-                                />
-                            </div>
+                                <div className='flex flex-col gap-1.5'>
+                                    <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Phone Number</label>
+                                    <div className='flex flex-row w-full gap-2'>
+                                        <div className="relative">
+                                            <button
+                                                type="button"
+                                                onClick={() => setDropdownOpen(!dropdownOpen)}
+                                                className="flex items-center gap-1.5 bg-slate-50 border border-gray-200 rounded-xl px-3 py-2.5 hover:bg-gray-100 transition-colors"
+                                            >
+                                                {flag(selectedCode.code)}
+                                                <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+                                            {dropdownOpen && (
+                                                <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl z-50 w-[240px] max-h-[250px] overflow-y-auto p-1 custom-scrollbar">
+                                                    {countryCodes.map((c) => (
+                                                        <button
+                                                            key={c.code}
+                                                            type="button"
+                                                            onClick={() => {
+                                                                setSelectedCode(c);
+                                                                setDropdownOpen(false);
+                                                            }}
+                                                            className={`flex items-center gap-3 w-full px-3 py-2.5 text-sm rounded-lg hover:bg-slate-50 text-left transition-colors ${selectedCode.code === c.code ? "bg-appLightPurple/20 text-appPurple font-bold" : ""}`}
+                                                        >
+                                                            {flag(c.code)}
+                                                            <span className="truncate">{c.name} <span className="text-gray-400 font-normal ml-1">({c.code})</span></span>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <input 
+                                            type="tel" 
+                                            value={phone}
+                                            onChange={handlePhoneChange}
+                                            placeholder="801 234 5678" 
+                                            className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-appBlack placeholder-gray-400 focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all'
+                                            required
+                                        />
+                                    </div>
+                                </div>
 
-                            <button 
-                                type="submit" 
-                                className='w-full bg-appPurple text-white py-3.5 rounded-xl font-bold text-sm hover:bg-appPurple transition-colors duration-300 shadow-lg active:scale-[0.98] mt-2'
-                            >
-                                Get in touch
-                            </button>
-                        </form>
+                                <div className='flex flex-col gap-1.5 relative'>
+                                    <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>Area of Interest</label>
+                                    <div className="relative">
+                                        <select 
+                                            value={areaOfInterest}
+                                            onChange={(e) => setAreaOfInterest(e.target.value)}
+                                            className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-appBlack focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all appearance-none cursor-pointer text-sm'
+                                            required
+                                        >
+                                            <option value="" disabled>Select an option...</option>
+                                            <option value="Software Engineering">Software Engineering</option>
+                                            <option value="AI & Data Infrastructure">AI & Data Infrastructure</option>
+                                            <option value="Cloud & DevOps">Cloud & DevOps</option>
+                                            <option value="Product Design">UI/UX & Product Design</option>
+                                            <option value="Logistics">Logistics</option>
+                                            <option value="Health">Health Tech</option>
+                                            <option value="Others">Others</option>
+                                        </select>
+                                        <svg className="w-4 h-4 text-gray-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <div className='flex flex-col gap-1.5'>
+                                    <label className='text-xs font-bold text-gray-500 uppercase tracking-widest'>How can we help?</label>
+                                    <textarea 
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        rows={2}
+                                        placeholder="Briefly describe your project..."
+                                        className='w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-appBlack placeholder-gray-400 focus:outline-none focus:bg-white focus:border-appPurple focus:ring-2 focus:ring-appPurple/20 transition-all resize-none'
+                                        required
+                                    />
+                                </div>
+
+                                <button 
+                                    type="submit" 
+                                    className='w-full bg-appBlack text-white py-3.5 rounded-xl font-bold text-sm hover:bg-appPurple transition-colors duration-300 shadow-lg active:scale-[0.98] mt-2'
+                                >
+                                    Get in touch
+                                </button>
+                            </form>
+                        </motion.div>
                     </motion.div>
-                </motion.div>
 
-            </div>
-        </section>
+                </div>
+            </section>
+
+            {/* Mount Consultation Modal Fluidly on the Same Page Context */}
+            <AnimatePresence>
+                {isModalOpen && <ConsultationModal onClose={() => setIsModalOpen(false)} />}
+            </AnimatePresence>
+        </>
     );
 }
 
 export default Banner;
-
 // "use client";
 // import React, { useState } from 'react';
 // import { motion, Variants } from 'framer-motion';
