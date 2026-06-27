@@ -21,7 +21,7 @@ const Header2: React.FC<Header2Props> = ({ onLoginClick, onRegisterClick }) => {
     const navItems = [
         { name: 'Home', href: '/' },
         { name: 'About', href: '/aboutus' },
-        { name: 'Product', href: '/product' },
+        // { name: 'Product', href: '/product' },
         { name: 'Services', href: '/services' },
         { name: 'Case Studies', href: '/case-studies' },
         { name: 'Our Team', href: '/our-team' },
