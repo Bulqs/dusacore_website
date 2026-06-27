@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NextTopLoader from 'nextjs-toploader';
+import FloatingActionMenu from "../components/newlandingpage/FloatingActionMenu";
 // import Footer from "./components/Footer";
 // import Header from "./components/Header";
 
@@ -117,6 +118,7 @@ export default function RootLayout({
         {/* <Header /> */}
         {children}
         {/* <Footer/> */}
+        <FloatingActionMenu />
       </body>
     </html>
   );

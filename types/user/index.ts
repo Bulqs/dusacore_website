@@ -300,6 +300,7 @@ export enum NAVIGATION {
   PRODUCTS = `/products`,
   REVIEWS = `/reviews`,
   SHIPPING = `/shipping`,
+  
   TERMS = `/terms`,
   BRAND = `/brand`,
   DRIVERSWEB = `/driver`,
@@ -311,6 +312,8 @@ export enum NAVIGATION {
   HOW_IT_WORKS = `/how-it-works`,
   SERVICES = `/services`,
   PRICING = `/pricing`,
+  // but if you want to be explicit:
+  TEAM_PROFILE_BASE = '/team/',
 
   VERIFY= `/verify`,
   FORGOT_PASSWORD = `/forgot-password`,
