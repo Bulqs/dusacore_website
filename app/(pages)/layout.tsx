@@ -54,7 +54,7 @@ const teachers = localFont({
 const montserrat = localFont({
   src: [
     {
-      path: '../fonts/montserrat-Regular.ttf', // Notice the double ../../
+      path: '../fonts/Montserrat-Regular.ttf', // Notice the double ../../
       weight: '100',
       style: 'normal',
     }
