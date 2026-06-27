@@ -360,7 +360,7 @@ const Banner = () => {
 
                                 <button 
                                     type="submit" 
-                                    className='w-full bg-appBlack text-white py-3.5 rounded-xl font-bold text-sm hover:bg-appPurple transition-colors duration-300 shadow-lg active:scale-[0.98] mt-2'
+                                    className='w-full bg-appPurple text-white py-3.5 rounded-xl font-bold text-sm hover:bg-appPurple transition-colors duration-300 shadow-lg active:scale-[0.98] mt-2'
                                 >
                                     Get in touch
                                 </button>
