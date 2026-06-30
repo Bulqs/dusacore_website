@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import NextTopLoader from 'nextjs-toploader';
+import FloatingActionMenu from "../components/newlandingpage/FloatingActionMenu";
 // import Footer from "./components/Footer";
 // import Header from "./components/Header";
 
@@ -53,7 +54,7 @@ const teachers = localFont({
 const montserrat = localFont({
   src: [
     {
-      path: '../fonts/montserrat-Regular.ttf', // Notice the double ../../
+      path: '../fonts/Montserrat-Regular.ttf', // Notice the double ../../
       weight: '100',
       style: 'normal',
     }
@@ -69,23 +70,23 @@ const montserrat = localFont({
 
 export const metadata: Metadata = {
   title: "DUSACORE",
-  description: "Unbowed, Unbent, Unbroken Services",
+  description: "DUSA CORE TECHNOLOGY SERVICESs",
   
   // 1. Favicon and Apple Touch Icons
   icons: {
-    icon: '/images/logo4.svg', // Place this file in your /public folder
-    apple: '/images/logo4.svg', // Useful for iOS home screens
+    icon: '/images/dusacoreimages/logodusa.png', // Place this file in your /public folder
+    apple: '/images/dusacoreimages/logodusa.png', // Useful for iOS home screens
   },
 
   // 2. Open Graph (Used by Facebook, LinkedIn, WhatsApp, etc.)
   openGraph: {
     title: 'DUSACORE',
-    description: 'Unbowed, Unbent, Unbroken Service',
+    description: 'DUSA CORE TECHNOLOGY SERVICES',
     url: 'https://www.dusacore.io', // Replace with your actual domain
     siteName: 'DUSACORE',
     images: [
       {
-        url: '/images/logo4.svg', // Place a 1200x630 image in your /public/images folder
+        url: '/images/dusacoreimages/logodusa.png', // Place a 1200x630 image in your /public/images folder
         width: 1200,
         height: 630,
         alt: 'Dusacore Cover Image',
@@ -99,8 +100,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'DUSACORE',
-    description: 'Unbowed, Unbent, Unbroken Services',
-    images: ['/images/logo4.svg'], // You can usually reuse the Open Graph image here
+    description: 'DUSA CORE TECHNOLOGY SERVICESs',
+    images: ['/images/dusacoreimages/logodusa.png'], // You can usually reuse the Open Graph image here
   },
 };
 
@@ -117,6 +118,7 @@ export default function RootLayout({
         {/* <Header /> */}
         {children}
         {/* <Footer/> */}
+        <FloatingActionMenu />
       </body>
     </html>
   );
