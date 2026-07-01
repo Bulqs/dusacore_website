@@ -9,8 +9,10 @@ import { servicesData } from "@/data/servicesData";
 import ServiceTabNav from "@/app/components/dusacomponent/dusaservicepage/ServiceTabNav";
 import ServiceDetailPanel from "@/app/components/dusacomponent/dusaservicepage/ServiceDetailPanel";
 import ServiceGridCards from "@/app/components/dusacomponent/dusaservicepage/ServiceGridCards";
+import { useSearchParams } from "next/navigation";
 
-export default function ServicesPage() {
+function ServicesContent() {
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState(servicesData[0].id);
 
   function setIsLoginOpen(_: boolean) {}
