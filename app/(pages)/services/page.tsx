@@ -9,6 +9,7 @@ import { servicesData } from "@/data/servicesData";
 import ServiceTabNav from "@/app/components/dusacomponent/dusaservicepage/ServiceTabNav";
 import ServiceDetailPanel from "@/app/components/dusacomponent/dusaservicepage/ServiceDetailPanel";
 import ServiceGridCards from "@/app/components/dusacomponent/dusaservicepage/ServiceGridCards";
+import { useSearchParams } from "next/navigation";
 
 function ServicesContent() {
   const searchParams = useSearchParams();
