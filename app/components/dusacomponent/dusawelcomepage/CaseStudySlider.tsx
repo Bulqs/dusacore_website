@@ -35,7 +35,7 @@ export default function CaseStudySlider() {
     };
 
     return (
-        <section className="w-full bg-white py-4 sm:py-8 lg:py-16 px-4 sm:px-6 lg:px-8">
+        <section className="w-full bg-white py-4 sm:py-8 lg:pb-16 lg:pt-4 px-4 sm:px-6 lg:px-8">
             <style>{`.scrollbar-hide::-webkit-scrollbar { display: none; }`}</style>
             <h2 className="text-3xl sm:text-4xl font-bold text-appTitleBgColor mb-12 text-center">
                 Our <span className="text-appBanner">Case Studies</span>

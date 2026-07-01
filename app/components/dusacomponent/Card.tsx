@@ -7,12 +7,13 @@ interface CardProps {
     description: string;
     readMoreHref: string;
     bgColor: string;
+    className?: string;
 }
 
-export default function Card({ icon: Icon, title, description, readMoreHref, bgColor }: CardProps) {
+export default function Card({ icon: Icon, title, description, readMoreHref, bgColor, className = "" }: CardProps) {
     return (
         <div
-            className="p-6 sm:p-8 rounded-3xl flex flex-col items-start text-left"
+            className={`p-6 sm:p-8 rounded-3xl flex flex-col items-start text-left ${className}`}
             style={{ backgroundColor: bgColor }}
         >
             <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 bg-white/20">

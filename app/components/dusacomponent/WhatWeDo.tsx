@@ -1,6 +1,4 @@
-"use client";
-import React, { useRef, useEffect, useState } from 'react';
-import { motion, Variants } from 'framer-motion';
+import React from 'react';
 import { Code, Brain, GraduationCap, Lightbulb, Palette, Cloud } from 'lucide-react';
 import Card from '@/app/components/dusacomponent/Card';
 
@@ -49,122 +47,33 @@ const cards = [
     },
 ];
 
-const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: { staggerChildren: 0.15 }
-    }
-};
-
-const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    show: { 
-        opacity: 1, 
-        y: 0, 
-        transition: { 
-            type: "spring" as const, 
-            stiffness: 100, 
-            damping: 15 
-        } 
-    }
-};
-
 export default function WhatWeDo() {
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const [isInteracting, setIsInteracting] = useState(false);
-
-    // Auto-scroll logic for mobile devices
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (!isInteracting && scrollRef.current && window.innerWidth < 1024) {
-                const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-                
-                if (scrollLeft + clientWidth >= scrollWidth - 10) {
-                    scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    scrollRef.current.scrollBy({ left: window.innerWidth * 0.85, behavior: 'smooth' });
-                }
-            }
-        }, 4000); 
-
-        return () => clearInterval(interval);
-    }, [isInteracting]);
-
     return (
-        <section className="w-full bg-white py-12 sm:py-16 lg:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-            
-            <style jsx>{`
-                .hide-scrollbar::-webkit-scrollbar {
-                    display: none;
-                }
-                .hide-scrollbar {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                }
-            `}</style>
-
-            <div className="max-w-7xl mx-auto relative z-10 w-full">
-                <div className="text-center mb-12 sm:mb-16">
-                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-appTitleBgColor mb-4 tracking-wide">
-                        What <span className="text-appBanner">We Do</span>
+        <section className="w-full bg-white py-12 sm:py-16 lg:pb-24 lg:pt-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto w-full">
+                <div className="text-center mb-4 md:mb-8">
+                    <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-appTitleBgColor mb-2 tracking-wide">
+                        What We Do
                     </h3>
-                    <p className="text-gray-600 max-w-2xl mx-auto text-base md:text-lg">
+                    <p className="text-gray-900 max-w-2xl mx-auto text-base font-semibold md:text-lg">
                         Delivering comprehensive technology solutions designed to scale your operations and drive innovation.
                     </p>
                 </div>
 
-                <motion.div 
-                    ref={scrollRef}
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-50px" }}
-                    onMouseEnter={() => setIsInteracting(true)}
-                    onMouseLeave={() => setIsInteracting(false)}
-                    onTouchStart={() => setIsInteracting(true)}
-                    onTouchEnd={() => setIsInteracting(false)}
-                    className="flex lg:grid lg:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto lg:overflow-visible snap-x snap-mandatory hide-scrollbar pb-8 lg:pb-0 items-stretch"
-                    style={{ perspective: '1200px' }} 
-                >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                     {cards.map((card, index) => (
-                        <motion.div
-                            key={index}
-                            variants={cardVariants}
-                            whileHover={{ 
-                                scale: 1.03, 
-                                rotateY: 8,
-                                rotateX: -4,
-                                z: 20,
-                            }}
-                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                            className="relative group h-full rounded-2xl w-[85vw] sm:w-[340px] lg:w-full shrink-0 snap-center flex flex-col"
-                            style={{ transformStyle: "preserve-3d" }}
-                        >
-                            <div className="absolute inset-0 w-full h-full rounded-2xl bg-appLightPurple overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-500 shadow-xl shadow-appPurple/20">
-                                <div 
-                                    className="absolute inset-0 mix-blend-multiply opacity-40 transition-transform duration-700 group-hover:scale-110"
-                                    style={{
-                                        backgroundImage: "url('https://plain-weur-prod-public.komododecks.com/202606/10/v9WarDYk2cqwh3FiRlF0/image.jpg')",
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        transform: 'scaleX(-1)' 
-                                    }}
-                                />
-                            </div>
-
-                            <div className="relative z-10 h-full w-full transform-gpu block whitespace-normal break-words" style={{ transform: "translateZ(30px)" }}>
-                                <Card
-                                    icon={card.icon}
-                                    title={card.title}
-                                    description={card.description}
-                                    readMoreHref={card.readMoreHref}
-                                    bgColor={card.bgColor}
-                                />
-                            </div>
-                        </motion.div>
+                        <div key={index} className="transition-shadow duration-300 hover:shadow-2xl rounded-3xl h-full">
+                            <Card
+                                icon={card.icon}
+                                title={card.title}
+                                description={card.description}
+                                readMoreHref={card.readMoreHref}
+                                bgColor={card.bgColor}
+                                className="h-full"
+                            />
+                        </div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

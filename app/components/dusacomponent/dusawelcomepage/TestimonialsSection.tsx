@@ -3,7 +3,7 @@ import TestimonialCard from './TestimonialCard'
 
 const TestimonialsSection = () => {
   return (
-    <section className="w-full bg-white py-4 sm:py-8 lg:py-16 px-4 sm:px-6 lg:px-8">
+    <section className="w-full bg-white py-4 sm:py-8 lg:pb-16 lg:pt-4 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-appTitleBgColor mb-12 text-center">
           Client <span className="text-appBanner">Testimonials</span>

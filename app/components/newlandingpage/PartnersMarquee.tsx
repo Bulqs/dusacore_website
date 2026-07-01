@@ -68,7 +68,7 @@ const PartnersMarquee = () => {
     const marqueeItems = [...partners, ...partners];
 
     return (
-        <section className="w-full bg-white space-y-8 py-4 sm:py-8 lg:py-16 flex flex-col items-center justify-center overflow-hidden">
+        <section className="w-full bg-white space-y-8 py-4 sm:py-5 lg:py-8 flex flex-col items-center justify-center overflow-hidden">
             
             <style jsx>{`
                 @keyframes marquee {

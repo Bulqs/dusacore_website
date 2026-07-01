@@ -19,16 +19,18 @@ export default function WhyChooseUs() {
                     Why <span className="text-appBanner">Choose Us</span>
                 </h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                     {items.map((item, index) => (
-                        <Card
-                            key={index}
-                            icon={item.icon}
-                            title={item.title}
-                            description={item.description}
-                            readMoreHref="#"
-                            bgColor={item.bgColor}
-                        />
+                        <div key={index} className="transition-shadow duration-300 hover:shadow-2xl rounded-3xl h-full">
+                            <Card
+                                icon={item.icon}
+                                title={item.title}
+                                description={item.description}
+                                readMoreHref="#"
+                                bgColor={item.bgColor}
+                                className="h-full"
+                            />
+                        </div>
                     ))}
                 </div>
             </div>
