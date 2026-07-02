@@ -292,7 +292,7 @@ const Banner = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const yourBusinessNumber = "23489044698791";
+        const yourBusinessNumber = "2349044698791";
         const encodedMessage = encodeURIComponent(
             `Hello DUSA CORE!\n\nMy name is ${name}.\nEmail: ${email}\nPhone: ${selectedCode.code}${phone}\nArea of Interest: ${areaOfInterest || 'Not specified'}\n\nHow you can help:\n${message}`
         );
@@ -789,7 +789,7 @@ export default Banner;
 
 //     const handleSubmit = (e: React.FormEvent) => {
 //         e.preventDefault();
-//         const yourBusinessNumber = "23489044698791";
+//         const yourBusinessNumber = "2349044698791";
 //         const encodedMessage = encodeURIComponent(
 //             `Hello DUSA CORE!\n\nMy name is ${name}.\nEmail: ${email}\nPhone: ${selectedCode.code}${phone}\nArea of Interest: ${areaOfInterest || 'Not specified'}\n\nHow you can help:\n${message}`
 //         );
