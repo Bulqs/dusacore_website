@@ -101,4 +101,4 @@ Create a `.env.local` file in the root of the **frontend** directory:
 NEXT_PUBLIC_API_URL=http://localhost:8080/api/v1
 
 # Contact Configuration
-NEXT_PUBLIC_WHATSAPP_NUMBER=23489044698791
+NEXT_PUBLIC_WHATSAPP_NUMBER=2349044698791
