@@ -31,7 +31,7 @@ const ReusableModal = ({ onClose, children, contentClassName = '', maxWidth = 'm
         >
             <motion.div
                 variants={contentVariants}
-                className={`bg-white rounded-xl shadow-2xl w-full ${maxWidth} relative flex flex-col ${contentClassName}`}
+                className={`bg-white rounded-xl shadow-2xl w-full ${maxWidth} relative flex flex-col overflow-hidden ${contentClassName}`}
             >
                 {children}
             </motion.div>
