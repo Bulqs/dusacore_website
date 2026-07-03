@@ -81,6 +81,64 @@ function ProductsContent() {
         </div>
       </section>
 
+      {/* ALL PRODUCTS GRID CARDS */}
+      <section className="w-full bg-white py-20 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-12 text-center sm:text-left">
+            <h3 className="text-2xl sm:text-3xl font-bold text-appTitleBgColor">
+              Explore All Solutions
+            </h3>
+            <p className="text-gray-500 text-sm sm:text-base mt-2">
+              Select a product below to view its technical architecture and request a demonstration.
+            </p>
+          </div>
+
+          <motion.div
+            variants={listContainerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            {productsData.map((product, index) => {
+              const GridIcon = product.icon;
+              return (
+                <motion.div
+                  key={index}
+                  variants={listItemVariants}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                  onClick={() => {
+                    setActiveProduct(product);
+                    window.scrollTo({ top: 400, behavior: "smooth" });
+                  }}
+                  className="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-xl hover:bg-white hover:border-[#4B0163]/30 transition-all cursor-pointer group flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-gray-200 mb-5 text-[#4B0163] group-hover:bg-[#4B0163] group-hover:text-white transition-all duration-300 shadow-sm">
+                      <GridIcon className="w-5 h-5" />
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900 group-hover:text-[#4B0163] transition-colors mb-2 leading-tight">
+                      {product.title}
+                    </h4>
+                    <p className="text-xs text-gray-500 leading-relaxed line-clamp-3 mb-4">
+                      {product.desc}
+                    </p>
+                  </div>
+                  <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest truncate pr-2">
+                      {product.features.slice(0, 1).join(" • ")}
+                    </span>
+                    <span className="text-xs font-bold text-[#4B0163] bg-purple-50 px-2 py-1 rounded-md whitespace-nowrap">
+                      View Specs
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

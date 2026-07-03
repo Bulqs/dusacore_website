@@ -1,5 +1,5 @@
 import { Variants } from "framer-motion";
-import { LucideIcon } from "lucide-react";
+import { BarChart, LucideIcon } from "lucide-react";
 import {
   Code,
   Brain,
@@ -178,6 +178,21 @@ export const servicesData: ServiceItem[] = [
     ],
     image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1000",
     color: "#ca8a04",
+  },
+  {
+    id: "data-analysis-visualization",
+    icon: BarChart,
+    title: "Data Analysis & Visualization",
+    tagline: "Actionable Business Intelligence & Interactive Dashboards",
+    desc: "Transform raw, disparate data sources into clear, interactive visual narratives to drive data-informed executive decision-making.",
+    deepDive: "We engineer comprehensive data pipelines that aggregate and structure complex datasets. By combining the heavy computational lifting of Python's data ecosystem with the rich visualization capabilities of enterprise BI tools, we uncover hidden trends, forecast outcomes, and present real-time metrics through intuitive, drill-down dashboards.",
+    techStack: ["Power BI", "Tableau", "Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "SQL"],
+    capabilities: [
+      "Interactive executive dashboard design and real-time reporting",
+      "Exploratory Data Analysis (EDA) and statistical modeling",
+      "Data wrangling, cleansing, and aggregation from disparate sources",
+      "Automated business intelligence pipelines and KPI tracking",
+    ],
   },
 ];
 
