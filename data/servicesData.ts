@@ -193,7 +193,10 @@ export const servicesData: ServiceItem[] = [
       "Data wrangling, cleansing, and aggregation from disparate sources",
       "Automated business intelligence pipelines and KPI tracking",
     ],
-  },
+    // Add these two missing lines below!
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1000",
+    color: "#2563eb", 
+  }
 ];
 
 export const containerVariants: Variants = {
