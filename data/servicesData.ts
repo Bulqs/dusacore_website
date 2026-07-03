@@ -21,6 +21,8 @@ export interface ServiceItem {
   deepDive: string;
   techStack: string[];
   capabilities: string[];
+  image: string;
+  color: string;
 }
 
 export const servicesData: ServiceItem[] = [
@@ -38,6 +40,8 @@ export const servicesData: ServiceItem[] = [
       "Asynchronous processing pipelines & automated document generation (MT940/MT942)",
       "Secure API design with strict OAuth2 & JWT architectures",
     ],
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000",
+    color: "#4B0163",
   },
   {
     id: "ai-optimization",
@@ -53,6 +57,8 @@ export const servicesData: ServiceItem[] = [
       "Custom AI room and resource allocation architectures",
       "Automated extraction, transformations, and data pipelining (ETL)",
     ],
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000",
+    color: "#0284c7",
   },
   {
     id: "cloud-devops",
@@ -68,6 +74,8 @@ export const servicesData: ServiceItem[] = [
       "Kubernetes cluster orchestration and auto-scaling",
       "Advanced observability, centralized logging, and incident alerting",
     ],
+    image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?auto=format&fit=crop&q=80&w=1000",
+    color: "#059669",
   },
   {
     id: "rpa-transformation",
@@ -83,6 +91,8 @@ export const servicesData: ServiceItem[] = [
       "Cognitive screen-scraping & automated document categorization",
       "Enterprise audit trail logging and exception handling compliance",
     ],
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000",
+    color: "#ea580c",
   },
   {
     id: "product-design",
@@ -98,6 +108,8 @@ export const servicesData: ServiceItem[] = [
       "Scalable enterprise design systems and component libraries",
       "Brand identity formulation and visual strategy alignment",
     ],
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=1000",
+    color: "#9333ea",
   },
   {
     id: "product-ideation",
@@ -113,6 +125,8 @@ export const servicesData: ServiceItem[] = [
       "Interactive wireframing and proof-of-concept validation",
       "Go-to-market strategic product roadmapping",
     ],
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1000",
+    color: "#be123c",
   },
   {
     id: "consultation-services",
@@ -128,6 +142,8 @@ export const servicesData: ServiceItem[] = [
       "Technical debt assessment and architecture refactoring plans",
       "Executive-level technological strategy and compliance advisory",
     ],
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000",
+    color: "#14b8a6",
   },
   {
     id: "it-support",
@@ -143,6 +159,8 @@ export const servicesData: ServiceItem[] = [
       "Continuous logging, backup automation, and server patch scheduling",
       "Network routing, load balancing, and firewall configuration",
     ],
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=1000",
+    color: "#6B21A8",
   },
   {
     id: "certifications-partnerships",
@@ -158,6 +176,8 @@ export const servicesData: ServiceItem[] = [
       "Validation protocols for enterprise architecture compliance standards",
       "Coached training sprints across modern software development methodologies",
     ],
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1000",
+    color: "#ca8a04",
   },
 ];
 
