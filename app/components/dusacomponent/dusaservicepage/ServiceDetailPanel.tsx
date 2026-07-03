@@ -82,7 +82,7 @@ export default function ServiceDetailPanel({ service }: ServiceDetailPanelProps)
           {service.techStack.map((tech) => (
             <span
               key={tech}
-              className="bg-gray-100 text-gray-800 text-xs font-semibold px-3 py-1.5 rounded-md border border-gray-200 transition-all hover:border-appBanner/30 hover:bg-white"
+              className="bg-appBanner text-white text-xs font-semibold px-3 py-1.5 rounded-md border border-appBanner transition-all hover:bg-appBanner/80 hover:border-appBanner/80"
             >
               {tech}
             </span>
