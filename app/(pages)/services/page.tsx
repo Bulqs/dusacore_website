@@ -28,6 +28,10 @@ function ServicesContent() {
 
   return (
     <div className="w-full flex flex-col relative bg-gray-50 min-h-screen">
+      <style jsx>{`
+          .hide-scrollbar::-webkit-scrollbar { display: none; }
+          .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
       <Header2
         onLoginClick={() => setIsLoginOpen(true)}
         onRegisterClick={() => setIsRegisterOpen(true)}
@@ -50,16 +54,14 @@ function ServicesContent() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start" style={{ perspective: "1500px" }}>
           <ServiceTabNav
             services={servicesData}
             activeTab={activeTab}
             onTabChange={setActiveTab}
           />
 
-          <div className="lg:col-span-8 bg-white border border-gray-200 rounded-2xl p-6 sm:p-10 shadow-sm relative overflow-hidden min-h-[500px]">
-            {activeService && <ServiceDetailPanel service={activeService} />}
-          </div>
+          {activeService && <ServiceDetailPanel service={activeService} />}
         </div>
       </section>
 
