@@ -9,6 +9,14 @@ import Banner from '@/app/components/dusacomponent/Banner';
 import faqBanner from '@/public/images/dusacoreimages/dusacoreabout.jpg';
 
 const faqs = [
+    {
+        question: "How does DUSA CORE ensure project consistency?",
+        answer: "We utilize our proprietary DUSA SOMS (Standard Operating Management System). This framework standardizes our development lifecycle, ensuring that regardless of the team or project scale, you receive the same rigorous level of quality control and operational efficiency."
+    },
+    {
+        question: "How do you maintain high quality standards?",
+        answer: "Our DUSA SOMS integrates our CMMI-Level 3 maturity practices into our daily workflows. Every project milestone is subject to internal audits and standardized reviews, ensuring our output meets enterprise-grade quality benchmarks."
+    },
     { question: "How much time do you take to develop a website?", answer: "Timelines vary depending on complexity and scope. A standard website typically takes 4–8 weeks, while more complex platforms with advanced features can take 3–6 months. We provide a detailed timeline during our initial consultation." },
     { question: "Do you build mobile compatible websites?", answer: "Yes, absolutely. Every website we build is fully responsive and optimized for all devices including mobile phones, tablets, and desktops to ensure a seamless user experience across every screen size." },
     { question: "Do you provide web hosting?", answer: "We do not directly provide hosting, but we partner with reliable hosting providers and can help you set up, configure, and manage your hosting environment. We recommend and support industry-leading solutions for optimal performance." },
@@ -21,8 +29,8 @@ const faqs = [
 export default function FAQPage() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
-    function setIsLoginOpen(_: boolean) {}
-    function setIsRegisterOpen(_: boolean) {}
+    function setIsLoginOpen(_: boolean) { }
+    function setIsRegisterOpen(_: boolean) { }
 
     const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
@@ -49,7 +57,7 @@ export default function FAQPage() {
                             const isOpen = openIndex === index;
                             return (
                                 <div key={index} className="bg-white border border-gray-200 shadow-sm">
-                                    <button 
+                                    <button
                                         onClick={() => toggleFAQ(index)}
                                         className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                                     >
