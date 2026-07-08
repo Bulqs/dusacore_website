@@ -18,7 +18,8 @@ import {
   MonitorSmartphone,
   CreditCard,
   Scale,
-  BarChart3
+  BarChart3,
+  ShieldCheck
 } from "lucide-react";
 import Header2 from "@/app/components/dusacomponent/Header2";
 import Footer from "@/app/components/dusacomponent/Footer";
@@ -285,14 +286,47 @@ export default function ProductsPage() {
       />
 
       <section className="w-full py-16 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto">
+        
+        {/* --- CMMI V&V / ESEC ENHANCEMENT: ENGINEERING BASELINE BAR --- */}
+        <div className="w-full max-w-5xl mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 mb-16 shadow-lg relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-8 hover:shadow-xl transition-shadow">
+           <div className="absolute top-0 left-0 w-2 h-full bg-[#4B0163]" />
+           <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                 <span className="flex w-3 h-3 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span>
+                 <span className="text-xs font-black uppercase tracking-widest text-gray-500">Verification & Security (V&V / ESEC)</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Enterprise Engineering Baselines</h3>
+              <p className="text-sm text-gray-600 mt-2 font-medium max-w-xl leading-relaxed">
+                 Our proprietary products are built to strict CMMI Level 3 DevSecOps standards. Every architecture passes mandatory automated integration tests, OWASP vulnerability scans, and rigorous load-balancing verification prior to deployment.
+              </p>
+           </div>
+
+           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full md:w-auto shrink-0">
+              <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 flex items-center gap-4 shadow-sm">
+                 <ShieldCheck className="w-8 h-8 text-[#4B0163]" />
+                 <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5">Security Architecture</p>
+                    <p className="text-xl font-black text-[#4B0163] leading-none">Zero-Trust</p>
+                 </div>
+              </div>
+              <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 flex items-center gap-4 shadow-sm">
+                 <CheckCircle2 className="w-8 h-8 text-[#4B0163]" />
+                 <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5">V&V Test Coverage</p>
+                    <p className="text-xl font-black text-[#4B0163] leading-none">&gt; 94%</p>
+                 </div>
+              </div>
+           </div>
+        </div>
+
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-appBanner bg-appBanner/10 px-4 py-1.5 rounded-full inline-flex items-center gap-2">
-            <Zap className="w-4 h-4" /> Off-The-Shelf Solutions
+          <span className="text-xs font-bold uppercase tracking-widest text-[#4B0163] bg-purple-50 border border-purple-100 px-5 py-2 rounded-full inline-flex items-center gap-2 shadow-sm mb-4">
+            <ShieldCheck className="w-4 h-4" /> CMMI-Aligned Product Development
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-appTitleBgColor mt-6 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-appTitleBgColor mt-2 tracking-tight">
             Software built for scale, <br className="hidden sm:block" />ready for deployment.
           </h2>
-          <p className="text-gray-600 mt-6 text-base sm:text-lg leading-relaxed">
+          <p className="text-gray-600 mt-6 text-base sm:text-lg leading-relaxed font-medium bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
             Bypass months of development time. DUSA CORE offers robust, customizable architectures perfectly suited for diverse industrial sectors.
           </p>
         </div>
