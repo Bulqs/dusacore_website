@@ -4,7 +4,7 @@ import React, { useState, Suspense } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   ArrowRight, X, BookOpen, User, Mail, Building, CheckCircle2, Phone, Calendar as CalendarIcon,
-  GraduationCap
+  GraduationCap, ShieldCheck, AlertCircle, Users, Clock, Activity
 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Header2 from "@/app/components/dusacomponent/Header2";
@@ -180,17 +180,29 @@ const CourseModal = ({ course, onClose }: { course: AcademyCourse, onClose: () =
     <motion.div variants={modalBackdrop} initial="hidden" animate="show" exit="hidden" className="fixed inset-0 bg-black/60 flex items-center justify-center z-[150] p-4 sm:p-6 backdrop-blur-sm">
       <motion.div variants={modalContent} className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden relative flex flex-col max-h-[90vh]">
         
+        {/* --- CMMI ENHANCED HEADER --- */}
         <div className="bg-gradient-to-br from-[#4B0163] to-[#8300AF] p-6 text-white flex justify-between items-start shrink-0 relative z-10">
-          <div>
-            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 backdrop-blur-sm">
-              <course.icon size={24} />
+          <div className="w-full">
+            <div className="flex justify-between items-start w-full">
+              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 backdrop-blur-sm shadow-md">
+                <course.icon size={24} />
+              </div>
+              <button onClick={onClose} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors">
+                <X size={20} />
+              </button>
             </div>
             <h2 className="text-2xl font-extrabold tracking-wide">{course.title}</h2>
-            <p className="text-sm font-medium text-white/80 mt-1">{course.duration} Intensive Training</p>
+            <p className="text-sm font-medium text-white/80 mt-1 mb-4">{course.duration} Intensive Training</p>
+            
+            {/* Capacity Gate Notice */}
+            <div className="bg-black/20 rounded-xl p-3.5 border border-white/10 flex items-center gap-3 shadow-inner">
+               <ShieldCheck className="w-5 h-5 text-green-400 shrink-0" />
+               <p className="text-xs font-medium text-white/90 leading-tight">
+                 <span className="font-bold text-white uppercase tracking-wider text-[10px]">CMMI-Aligned Capacity Gate:</span> <br/>
+                 Strict 1:5 Mentor Ratio enforced. Mandatory onboarding interview required prior to pod allocation.
+               </p>
+            </div>
           </div>
-          <button onClick={onClose} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors">
-            <X size={20} />
-          </button>
         </div>
 
         <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-1 relative z-10 bg-slate-50">
@@ -335,41 +347,54 @@ const CourseModal = ({ course, onClose }: { course: AcademyCourse, onClose: () =
 
           {step === "payment" && (
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center text-center space-y-6 py-4">
-                <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center border-4 border-green-100">
+                
+                {/* --- CMMI CAPACITY GATE ACTION ALERT --- */}
+                <div className="w-full bg-yellow-50 p-5 rounded-2xl border border-yellow-200 flex items-start gap-4 text-left shadow-sm relative overflow-hidden">
+                    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-yellow-400"></div>
+                    <AlertCircle className="text-yellow-600 flex-shrink-0 w-6 h-6 mt-0.5" />
+                    <div>
+                        <h4 className="text-sm font-extrabold text-yellow-900 mb-1">Action Required: Capacity Gate Interview</h4>
+                        <p className="text-xs text-yellow-800 leading-relaxed font-medium">
+                            Your registration code is <span className="font-bold font-mono bg-yellow-200/50 px-1.5 py-0.5 rounded text-yellow-900">{uniqueCode}</span>. To complete your entry into the engineering pod, you must perform a mandatory interview scheduling.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center border-4 border-green-100 mt-2 shadow-sm">
                     <CheckCircle2 className="w-8 h-8 text-green-500" />
                 </div>
                 
                 <div>
                   <h3 className="text-2xl font-extrabold text-gray-900">Registration Initiated!</h3>
-                  <p className="text-sm text-gray-500 mt-2 max-w-md mx-auto">Make a transfer of <span className="font-bold text-[#4B0163]">{course.price}</span> to any of our business accounts below. Once paid, schedule your onboarding interview and share your receipt via WhatsApp.</p>
+                  <p className="text-sm text-gray-600 mt-2 max-w-md mx-auto font-medium">Make a transfer of <span className="font-bold text-[#4B0163]">{course.price}</span> to any of our business accounts below. Once paid, schedule your onboarding interview and share your receipt via WhatsApp.</p>
                 </div>
 
-                <div className="w-full bg-purple-50 border-2 border-purple-200 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center">
-                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Your Unique Code</span>
-                  <span className="text-2xl font-black text-[#4B0163] tracking-widest">{uniqueCode}</span>
+                <div className="w-full bg-purple-50 border-2 border-purple-200 border-dashed rounded-2xl p-5 flex flex-col items-center justify-center">
+                  <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Your Unique Code</span>
+                  <span className="text-3xl font-black text-[#4B0163] tracking-widest drop-shadow-sm">{uniqueCode}</span>
                 </div>
 
-                <div className="w-full space-y-3 text-left">
+                <div className="w-full space-y-3 text-left mt-2">
                   <h4 className="text-xs font-black uppercase tracking-widest text-gray-400 pb-1 flex items-center gap-2">
                     <Building className="w-4 h-4"/> Approved Bank Accounts
                   </h4>
                   
                   {BANK_ACCOUNTS.map((bank, idx) => (
-                    <div key={idx} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div key={idx} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:border-purple-200 transition-colors">
                       <div>
-                        <p className="text-xs font-bold text-gray-500">{bank.bank} <span className="ml-1 text-[10px] bg-gray-100 px-2 py-0.5 rounded-full">{bank.currency}</span></p>
-                        <p className="text-sm font-semibold text-gray-800">{bank.name}</p>
+                        <p className="text-xs font-bold text-gray-500 mb-0.5">{bank.bank} <span className="ml-1 text-[10px] bg-gray-100 px-2 py-0.5 rounded-full">{bank.currency}</span></p>
+                        <p className="text-sm font-extrabold text-gray-800">{bank.name}</p>
                       </div>
-                      <div className="text-lg font-black text-[#4B0163] bg-purple-50 px-3 py-1 rounded-lg">
+                      <div className="text-lg font-black text-[#4B0163] bg-purple-50 px-4 py-1.5 rounded-lg border border-purple-100">
                         {bank.number}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="w-full flex flex-col sm:flex-row gap-3 pt-4">
-                  <button onClick={() => setIsCalendarOpen(true)} className="w-full sm:w-1/2 bg-appBlack hover:bg-[#4B0163] text-white py-4 rounded-xl font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 text-sm">
-                    <CalendarIcon className="w-4 h-4" /> Schedule Interview
+                <div className="w-full flex flex-col sm:flex-row gap-4 pt-6 mt-2 border-t border-gray-100">
+                  <button onClick={() => setIsCalendarOpen(true)} className="w-full sm:w-1/2 bg-gray-900 hover:bg-[#4B0163] text-white py-4 rounded-xl font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 text-sm">
+                    <CalendarIcon className="w-4 h-4" /> Schedule Mandatory Interview
                   </button>
                   <button onClick={handleWhatsAppRedirect} className="w-full sm:w-1/2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-4 rounded-xl font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 text-sm">
                     <Phone className="w-4 h-4" /> Send Receipt
@@ -426,21 +451,21 @@ function AcademyContent() {
 
       <section className="w-full py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* COHORT ANNOUNCEMENT BAR */}
-        <div className="w-full max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 mb-16 shadow-lg relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
-           <div className="absolute top-0 left-0 w-2 h-full bg-appBanner" />
+        <div className="w-full max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 mb-8 shadow-lg relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6 hover:shadow-xl transition-shadow">
+           <div className="absolute top-0 left-0 w-2 h-full bg-[#4B0163]" />
            <div>
               <div className="flex items-center gap-3 mb-2">
-                 <span className={`flex w-3 h-3 rounded-full ${isCohortOpen ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></span>
+                 <span className={`flex w-3 h-3 rounded-full ${isCohortOpen ? 'bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-red-500'}`}></span>
                  <span className="text-xs font-black uppercase tracking-widest text-gray-500">Cohort 2026</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-appTitleBgColor">Summer Engineering Program</h3>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Summer Engineering Program</h3>
            </div>
            
            <div className="flex flex-col sm:items-end text-center sm:text-right">
               {isCohortOpen ? (
                 <>
-                  <span className="bg-green-50 text-green-700 px-4 py-1.5 rounded-full text-sm font-bold border border-green-200 mb-2">Registration Open</span>
-                  <span className="text-xs text-gray-500 font-medium">Select a track below to enroll.</span>
+                  <span className="bg-green-50 text-green-700 px-4 py-1.5 rounded-full text-sm font-bold border border-green-200 mb-2 shadow-sm">Registration Open</span>
+                  <span className="text-xs text-gray-500 font-bold">Select a track below to enroll.</span>
                 </>
               ) : (
                 <span className="bg-red-50 text-red-700 px-4 py-1.5 rounded-full text-sm font-bold border border-red-200">Registration Closed</span>
@@ -448,15 +473,47 @@ function AcademyContent() {
            </div>
         </div>
 
+        {/* --- CMMI OT/PLAN ENHANCEMENT: ACADEMY BASELINE BAR --- */}
+        <div className="w-full max-w-5xl mx-auto bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 mb-16 shadow-lg relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-8 hover:shadow-xl transition-shadow">
+           <div className="absolute top-0 left-0 w-2 h-full bg-[#4B0163]" />
+           <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                 <span className="flex w-3 h-3 rounded-full bg-[#4B0163] shadow-[0_0_8px_rgba(75,1,99,0.6)]"></span>
+                 <span className="text-xs font-black uppercase tracking-widest text-gray-500">Organizational Training & Capacity (OT / PLAN)</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">CMMI-Aligned Academy Standards</h3>
+              <p className="text-sm text-gray-600 mt-2 font-medium max-w-xl leading-relaxed">
+                 Our tech academy operations are strictly governed by CMMI Level 3 Work Planning and Capacity models. We guarantee a dedicated engineering pod environment without exceeding our 1:5 mentor-to-student safety thresholds.
+              </p>
+           </div>
+
+           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full md:w-auto shrink-0">
+              <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 flex items-center gap-4 shadow-sm">
+                 <Users className="w-8 h-8 text-[#4B0163]" />
+                 <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5">Max Pod Ratio</p>
+                    <p className="text-xl font-black text-[#4B0163] leading-none">1 : 5</p>
+                 </div>
+              </div>
+              <div className="bg-purple-50 rounded-xl p-4 border border-purple-100 flex items-center gap-4 shadow-sm">
+                 <Clock className="w-8 h-8 text-[#4B0163]" />
+                 <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-0.5">Code Review SLA</p>
+                    <p className="text-xl font-black text-[#4B0163] leading-none">&lt; 48 Hrs</p>
+                 </div>
+              </div>
+           </div>
+        </div>
+
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-bold uppercase tracking-widest text-appBanner bg-appBanner/10 px-4 py-1.5 rounded-full inline-flex items-center gap-2">
-            <GraduationCap className="w-4 h-4" /> The DUSA Advantage
+          <span className="text-xs font-bold uppercase tracking-widest text-[#4B0163] bg-purple-50 border border-purple-100 px-5 py-2 rounded-full inline-flex items-center gap-2 shadow-sm mb-4">
+            <ShieldCheck className="w-4 h-4" /> CMMI-Aligned Training
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-appTitleBgColor mt-6 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-appTitleBgColor mt-2 tracking-tight leading-tight">
             Intern as you train.
           </h2>
-          <p className="text-gray-600 mt-6 text-base sm:text-lg leading-relaxed font-medium bg-purple-50 p-4 rounded-xl border border-purple-100">
-            We don&apos;t just teach theory. Our curricula integrate you directly into our engineering pods. You will work alongside world-class professionals on <strong className="text-appBanner">real-life software projects</strong> destined for production.
+          <p className="text-gray-600 mt-6 text-base sm:text-lg leading-relaxed font-medium bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
+            We don&apos;t just teach theory. Our curricula integrate you directly into our engineering pods. You will work alongside world-class professionals on <strong className="text-[#4B0163]">real-life software projects</strong> destined for production.
           </p>
         </div>
 
@@ -567,7 +624,7 @@ export default function AcademyPage() {
 // import { motion, AnimatePresence, Variants } from "framer-motion";
 // import {
 //   ArrowRight, X, BookOpen, User, Mail, Building, CheckCircle2, Phone, Calendar as CalendarIcon,
-//   GraduationCap
+//   GraduationCap, ShieldCheck, AlertCircle
 // } from "lucide-react";
 // import { useSearchParams } from "next/navigation";
 // import Header2 from "@/app/components/dusacomponent/Header2";
@@ -577,7 +634,24 @@ export default function AcademyPage() {
 // import { academyCourses, BANK_ACCOUNTS, WHATSAPP_NUMBER, AcademyCourse } from "@/data/academyData";
 // import AcademyTabNav from "@/app/components/dusacomponent/dusaacademypage/AcademyTabNav";
 // import AcademyDetailPanel from "@/app/components/dusacomponent/dusaacademypage/AcademyDetailPanel";
-// import AcademyGridCards from "@/app/components/dusacomponent/dusaacademypage/AcademyGridCards";
+
+// // --- ANIMATION VARIANTS (Matching Products Page) ---
+// const listContainerVariants: Variants = {
+//   hidden: { opacity: 0 },
+//   show: {
+//     opacity: 1,
+//     transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+//   }
+// };
+
+// const listItemVariants: Variants = {
+//   hidden: { opacity: 0, y: 20 },
+//   show: {
+//     opacity: 1,
+//     y: 0,
+//     transition: { type: "spring", stiffness: 200, damping: 20 }
+//   }
+// };
 
 // const modalBackdrop: Variants = {
 //   hidden: { opacity: 0, backdropFilter: "blur(0px)" },
@@ -726,17 +800,29 @@ export default function AcademyPage() {
 //     <motion.div variants={modalBackdrop} initial="hidden" animate="show" exit="hidden" className="fixed inset-0 bg-black/60 flex items-center justify-center z-[150] p-4 sm:p-6 backdrop-blur-sm">
 //       <motion.div variants={modalContent} className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden relative flex flex-col max-h-[90vh]">
         
+//         {/* --- CMMI ENHANCED HEADER --- */}
 //         <div className="bg-gradient-to-br from-[#4B0163] to-[#8300AF] p-6 text-white flex justify-between items-start shrink-0 relative z-10">
-//           <div>
-//             <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 backdrop-blur-sm">
-//               <course.icon size={24} />
+//           <div className="w-full">
+//             <div className="flex justify-between items-start w-full">
+//               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4 backdrop-blur-sm shadow-md">
+//                 <course.icon size={24} />
+//               </div>
+//               <button onClick={onClose} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors">
+//                 <X size={20} />
+//               </button>
 //             </div>
 //             <h2 className="text-2xl font-extrabold tracking-wide">{course.title}</h2>
-//             <p className="text-sm font-medium text-white/80 mt-1">{course.duration} Intensive Training</p>
+//             <p className="text-sm font-medium text-white/80 mt-1 mb-4">{course.duration} Intensive Training</p>
+            
+//             {/* Capacity Gate Notice */}
+//             <div className="bg-black/20 rounded-xl p-3.5 border border-white/10 flex items-center gap-3 shadow-inner">
+//                <ShieldCheck className="w-5 h-5 text-green-400 shrink-0" />
+//                <p className="text-xs font-medium text-white/90 leading-tight">
+//                  <span className="font-bold text-white uppercase tracking-wider text-[10px]">CMMI-Aligned Quality Gate:</span> <br/>
+//                  Cohort Capacity Restricted. Mandatory onboarding interview required for admission.
+//                </p>
+//             </div>
 //           </div>
-//           <button onClick={onClose} className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors">
-//             <X size={20} />
-//           </button>
 //         </div>
 
 //         <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-1 relative z-10 bg-slate-50">
@@ -881,41 +967,54 @@ export default function AcademyPage() {
 
 //           {step === "payment" && (
 //             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center text-center space-y-6 py-4">
-//                 <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center border-4 border-green-100">
+                
+//                 {/* --- CMMI CAPACITY GATE ACTION ALERT --- */}
+//                 <div className="w-full bg-yellow-50 p-5 rounded-2xl border border-yellow-200 flex items-start gap-4 text-left shadow-sm relative overflow-hidden">
+//                     <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-yellow-400"></div>
+//                     <AlertCircle className="text-yellow-600 flex-shrink-0 w-6 h-6 mt-0.5" />
+//                     <div>
+//                         <h4 className="text-sm font-extrabold text-yellow-900 mb-1">Action Required: Capacity Gate Interview</h4>
+//                         <p className="text-xs text-yellow-800 leading-relaxed font-medium">
+//                             Your registration code is <span className="font-bold font-mono bg-yellow-200/50 px-1.5 py-0.5 rounded text-yellow-900">{uniqueCode}</span>. To complete your entry into the engineering pod, you must perform a mandatory interview scheduling.
+//                         </p>
+//                     </div>
+//                 </div>
+
+//                 <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center border-4 border-green-100 mt-2 shadow-sm">
 //                     <CheckCircle2 className="w-8 h-8 text-green-500" />
 //                 </div>
                 
 //                 <div>
 //                   <h3 className="text-2xl font-extrabold text-gray-900">Registration Initiated!</h3>
-//                   <p className="text-sm text-gray-500 mt-2 max-w-md mx-auto">Make a transfer of <span className="font-bold text-[#4B0163]">{course.price}</span> to any of our business accounts below. Once paid, schedule your onboarding interview and share your receipt via WhatsApp.</p>
+//                   <p className="text-sm text-gray-600 mt-2 max-w-md mx-auto font-medium">Make a transfer of <span className="font-bold text-[#4B0163]">{course.price}</span> to any of our business accounts below. Once paid, schedule your onboarding interview and share your receipt via WhatsApp.</p>
 //                 </div>
 
-//                 <div className="w-full bg-purple-50 border-2 border-purple-200 border-dashed rounded-2xl p-4 flex flex-col items-center justify-center">
-//                   <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Your Unique Code</span>
-//                   <span className="text-2xl font-black text-[#4B0163] tracking-widest">{uniqueCode}</span>
+//                 <div className="w-full bg-purple-50 border-2 border-purple-200 border-dashed rounded-2xl p-5 flex flex-col items-center justify-center">
+//                   <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Your Unique Code</span>
+//                   <span className="text-3xl font-black text-[#4B0163] tracking-widest drop-shadow-sm">{uniqueCode}</span>
 //                 </div>
 
-//                 <div className="w-full space-y-3 text-left">
+//                 <div className="w-full space-y-3 text-left mt-2">
 //                   <h4 className="text-xs font-black uppercase tracking-widest text-gray-400 pb-1 flex items-center gap-2">
 //                     <Building className="w-4 h-4"/> Approved Bank Accounts
 //                   </h4>
                   
 //                   {BANK_ACCOUNTS.map((bank, idx) => (
-//                     <div key={idx} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+//                     <div key={idx} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover:border-purple-200 transition-colors">
 //                       <div>
-//                         <p className="text-xs font-bold text-gray-500">{bank.bank} <span className="ml-1 text-[10px] bg-gray-100 px-2 py-0.5 rounded-full">{bank.currency}</span></p>
-//                         <p className="text-sm font-semibold text-gray-800">{bank.name}</p>
+//                         <p className="text-xs font-bold text-gray-500 mb-0.5">{bank.bank} <span className="ml-1 text-[10px] bg-gray-100 px-2 py-0.5 rounded-full">{bank.currency}</span></p>
+//                         <p className="text-sm font-extrabold text-gray-800">{bank.name}</p>
 //                       </div>
-//                       <div className="text-lg font-black text-[#4B0163] bg-purple-50 px-3 py-1 rounded-lg">
+//                       <div className="text-lg font-black text-[#4B0163] bg-purple-50 px-4 py-1.5 rounded-lg border border-purple-100">
 //                         {bank.number}
 //                       </div>
 //                     </div>
 //                   ))}
 //                 </div>
 
-//                 <div className="w-full flex flex-col sm:flex-row gap-3 pt-4">
-//                   <button onClick={() => setIsCalendarOpen(true)} className="w-full sm:w-1/2 bg-appBlack hover:bg-[#4B0163] text-white py-4 rounded-xl font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 text-sm">
-//                     <CalendarIcon className="w-4 h-4" /> Schedule Interview
+//                 <div className="w-full flex flex-col sm:flex-row gap-4 pt-6 mt-2 border-t border-gray-100">
+//                   <button onClick={() => setIsCalendarOpen(true)} className="w-full sm:w-1/2 bg-gray-900 hover:bg-[#4B0163] text-white py-4 rounded-xl font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 text-sm">
+//                     <CalendarIcon className="w-4 h-4" /> Schedule Mandatory Interview
 //                   </button>
 //                   <button onClick={handleWhatsAppRedirect} className="w-full sm:w-1/2 bg-[#25D366] hover:bg-[#20bd5a] text-white py-4 rounded-xl font-bold shadow-lg transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 text-sm">
 //                     <Phone className="w-4 h-4" /> Send Receipt
@@ -938,13 +1037,17 @@ export default function AcademyPage() {
 // function AcademyContent() {
 //   const searchParams = useSearchParams();
 //   const tabParam = searchParams.get("tab");
-//   const [activeTab, setActiveTab] = useState(tabParam || academyCourses[0].id);
+  
+//   // ADDED SAFE FALLBACK
+//   const safeCourses = academyCourses || [];
+  
+//   const [activeTab, setActiveTab] = useState(tabParam || safeCourses[0]?.id);
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 
 //   function setIsLoginOpen(_: boolean) {}
 //   function setIsRegisterOpen(_: boolean) {}
 
-//   const activeCourse = academyCourses.find((c) => c.id === activeTab);
+//   const activeCourse = safeCourses.find((c) => c.id === activeTab);
 //   const isCohortOpen = true;
 
 //   return (
@@ -1004,7 +1107,7 @@ export default function AcademyPage() {
 
 //         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start" style={{ perspective: "1500px" }}>
 //           <AcademyTabNav
-//             courses={academyCourses}
+//             courses={safeCourses}
 //             activeTab={activeTab}
 //             onTabChange={setActiveTab}
 //           />
@@ -1019,6 +1122,7 @@ export default function AcademyPage() {
 //         </div>
 //       </section>
 
+//       {/* REPLACED EXTERNAL COMPONENT WITH INLINE GRID MATCHING PRODUCTS PAGE */}
 //       <section className="w-full bg-white py-20 px-4 sm:px-6 lg:px-8 border-t border-gray-100">
 //         <div className="max-w-7xl mx-auto">
 //           <div className="mb-12">
@@ -1030,13 +1134,54 @@ export default function AcademyPage() {
 //             </p>
 //           </div>
 
-//           <AcademyGridCards
-//             courses={academyCourses}
-//             onCardClick={(id: string) => {
-//               setActiveTab(id);
-//               window.scrollTo({ top: 400, behavior: "smooth" });
-//             }}
-//           />
+//           <motion.div
+//             variants={listContainerVariants}
+//             initial="hidden"
+//             whileInView="show"
+//             viewport={{ once: true, margin: "-50px" }}
+//             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+//           >
+//             {safeCourses.map((course, index) => {
+//               const GridIcon = course.icon;
+              
+//               return (
+//                 <motion.div
+//                   key={course.id || index}
+//                   variants={listItemVariants}
+//                   whileHover={{ y: -6, transition: { duration: 0.2 } }}
+//                   onClick={() => {
+//                     setActiveTab(course.id);
+//                     window.scrollTo({ top: 400, behavior: "smooth" });
+//                   }}
+//                   className="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-xl hover:bg-white hover:border-[#4B0163]/30 transition-all cursor-pointer group flex flex-col justify-between"
+//                 >
+//                   <div>
+//                     <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-gray-200 mb-5 text-[#4B0163] group-hover:bg-[#4B0163] group-hover:text-white transition-all duration-300 shadow-sm">
+//                       {GridIcon && <GridIcon className="w-5 h-5" />}
+//                     </div>
+//                     <h4 className="text-lg font-bold text-gray-900 group-hover:text-[#4B0163] transition-colors mb-2 leading-tight">
+//                       {course.title}
+//                     </h4>
+//                     <p className="text-xs text-gray-500 leading-relaxed line-clamp-3 mb-4">
+//                       {course.desc}
+//                     </p>
+//                   </div>
+                  
+//                   {/* Consistent Bottom Layout matching Products page */}
+//                   <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
+//                     <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest truncate pr-2">
+//                       {course.duration}
+//                     </span>
+//                     <span className="text-xs font-bold text-[#4B0163] bg-purple-50 px-2 py-1 rounded-md whitespace-nowrap">
+//                       {course.price}
+//                     </span>
+//                   </div>
+                  
+//                 </motion.div>
+//               );
+//             })}
+//           </motion.div>
+
 //         </div>
 //       </section>
 
