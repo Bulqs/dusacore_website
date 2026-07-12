@@ -37,7 +37,7 @@ const teamRegistry: Record<string, {
     expertise: string[];
     achievements: string[];
 }> = {
-    "hammed-ridwan-olaide": {
+    "hammedolaide": {
         name: "Hammed Ridwan Olaide",
         role: "Chief Executive Officer",
         image: hammed,
@@ -46,7 +46,7 @@ const teamRegistry: Record<string, {
         expertise: ["System Automation", "Financial Engineering Logics", "Scalable Infrastructures"],
         achievements: ["Successfully scaled platform delivery frameworks to automate high-volume operations.", "Led architecture overhauls reducing processing lag by over 40%."]
     },
-    "akinwale-olawale-ridwan": {
+    "olawaleakinwale": {
         name: "Akinwale Olawale Ridwan",
         role: "Chief Creative Designer",
         image: akinwale,
@@ -55,7 +55,7 @@ const teamRegistry: Record<string, {
         expertise: ["Framer Motion & Micro-interactions", "Advanced Tailwind Architecture", "Brand Strategy"],
         achievements: ["Designed highly praised interactive frontends for complex data analytics systems.", "Built the core components system unifying our frontend development cycles."]
     },
-    "edifon-emmanuel-jimmy": {
+    "edifomemmanuel": {
         name: "Edifon Emmanuel Jimmy",
         role: "Chief Artificial Intelligence Officer",
         image: edifon,
@@ -64,7 +64,7 @@ const teamRegistry: Record<string, {
         expertise: ["Genetic Algorithms", "Advanced Computational Modeling", "Python & Data Science Ecosystems"],
         achievements: ["Designed and implemented a custom AI-driven room allocation engine.", "Optimized real-time algorithmic pipelines handling massive relational datasets."]
     },
-    "umar-ibrahim-ayobami": {
+    "umaribrahim": {
         name: "Umar Ibrahim Ayobami",
         role: "Chief Experience Officer",
         image: umar,
@@ -73,9 +73,9 @@ const teamRegistry: Record<string, {
         expertise: ["Behavioral Analysis", "Product Journey Mapping", "Heuristic Evaluations"],
         achievements: ["Redesigned high-churn user registration paths into flawless single-session flows.", "Established data-informed feedback loops mapping user actions back to platform features."]
     },
-    "fatimah-hammed-omoshalewa": {
+    "hammedfatimah": {
         name: "Fatimah Hammed Omoshalewa",
-        role: "Chief Growth",
+        role: "Chief Growth Officer",
         image: fatimah,
         bio: "Fatimah builds and accelerates the loops that connect our technological outputs to market scale. She applies deep operational metrics and market analytics to ensure our technical products find continuous commercial success.",
         focusAreas: ["Growth Analytics", "Market Acquisition Strategy", "Business Development Loops"],

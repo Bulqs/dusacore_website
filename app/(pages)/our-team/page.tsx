@@ -47,7 +47,7 @@ const team = [
     { name: "Akinwale Olawale Ridwan", role: "Chief Creative Designer", image: akinwale },
     { name: "Edifon Emmanuel Jimmy", role: "Chief Artificial Intelligence Officer", image: edifon },
     { name: "Umar Ibrahim Ayobami", role: "Chief Experience Officer", image: umar },
-    { name: "Fatimah Hammed Omoshalewa", role: "Chief Growth", image: fatimah },
+    { name: "Fatimah Hammed Omoshalewa", role: "Chief Growth Officer", image: fatimah },
     { name: "Ganiyat Bukola Shittu", role: "Chief Product Officer", image: bukola }, // Note: Add image import when available
 ];
 

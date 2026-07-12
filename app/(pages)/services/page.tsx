@@ -153,7 +153,7 @@ const servicesData = [
     tagline: "Proactive System Administration & High-Availability Servers",
     desc: "Maintain secure production runtime environments with professional configuration management, server hardening, and network oversight.",
     deepDive: "We offer intermediate and advanced tier system administration support tailored for modern containerized architectures and bare-metal environments. We monitor application health logs, mitigate architectural vulnerabilities, and guarantee robust infrastructure operations for corporate applications.",
-    techStack: ["Linux Server Environments", "Nginx", "Bash Scripting", "PostgreSQL", "MongoDB", "Network Security"],
+    techStack: ["Linux Server Environments", "Nginx", "Bash Scripting", "MongoDB", "Network Security"],
     capabilities: [
       "Intermediate-level Linux server provisioning, tuning, and monitoring",
       "Relational and non-relational database tuning (PL/SQL & MongoDB query optimization)",
