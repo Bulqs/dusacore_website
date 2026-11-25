@@ -21,7 +21,7 @@ export const WHATSAPP_NUMBER = "2349044698791";
 
 export const BANK_ACCOUNTS = [
   { bank: "Ecobank Nigeria", currency: "NGN (Naira)", name: "DUSA CORE TECH LTD", number: "4130198573" },
-  { bank: "Wema Bank", currency: "NGN (Naira)", name: "DUSA CORE TECHNOLOGIES", number: "7650701035" },
+  { bank: "FCMB Bank", currency: "NGN (Naira)", name: "DUSA CORE TECHNOLOGIES", number: "6700552862" },
   { bank: "Lead Bank", currency: "USD (Dollars)", name: "DUSA CORE TECHNOLOGIES", number: "213192089068" }
 ];
 
